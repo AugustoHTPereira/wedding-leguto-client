@@ -123,7 +123,7 @@ const Fototeca = () => {
                                         </Box>
 
                                         <Flex justifyContent='space-between' position='absolute' bottom='0' padding='2' bg='whiteAlpha.400' w='full' backdropFilter='blur(4px)' alignItems='center'>
-                                            <IconButton aria-label="delete" icon={<ExternalLinkIcon />} colorScheme='teal' size='xs' as={Link} to={picture.originalUrl} target='_blank' />
+                                            <IconButton aria-label="delete" icon={<ExternalLinkIcon />} colorScheme='teal' size='xs' as={'a'} href={picture.originalUrl} target='_blank' />
                                             <Switch onChange={() => handleUpdatePrivacy(picture.id)} defaultChecked={picture.public} title="Indica se é publica ou não" size='sm' />
                                             <IconButton aria-label="delete" icon={<DeleteIcon />} colorScheme='red' size='xs' onClick={() => handleDeleteFile(picture.id)} />
                                         </Flex>
