@@ -5,6 +5,7 @@ import { IdentityContextProvider } from './Contexts/IdentityContext';
 import Router from './Router';
 import { theme } from './Theme';
 import "@fontsource/raleway";
+import CookieConcent from './Components/CookieConcent';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -15,6 +16,8 @@ root.render(
     <IdentityContextProvider>
       <ChakraProvider theme={theme}>
         <Router />
+
+        <CookieConcent />
       </ChakraProvider>
     </IdentityContextProvider>
   </React.StrictMode>
