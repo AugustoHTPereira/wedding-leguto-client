@@ -4,6 +4,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { IdentityContextProvider } from './Contexts/IdentityContext';
 import Router from './Router';
 import { theme } from './Theme';
+import "@fontsource/raleway";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

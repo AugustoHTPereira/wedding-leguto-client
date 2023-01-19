@@ -73,8 +73,8 @@ const Fototeca = () => {
     }, [id]);
 
     return (
-        <Box bgImage={Texture} bgSize='4px' minH='100vh' w='full' px='6'>
-            <Box pt='6' mx='auto' w='max-content'>
+        <Box bgImage={Texture} bgSize='4px' minH='100vh' w='full' pb='12'>
+            <Box pt='6' mx='auto' w='max-content' px='6'>
                 <Link to="/">
                     <Image src={Brand} w='16' mx='auto' />
                 </Link>
@@ -82,13 +82,13 @@ const Fototeca = () => {
                 <Text textAlign='center' fontSize='sm' mt='2' fontWeight='medium'>FOTOTECA</Text>
             </Box>
             
-            <Box mt='6' w='full' maxWidth='container.md' mx='auto'>
+            <Box mt='6' w='full' maxWidth='container.md' mx='auto' px='6'>
                 <FileUploadContainer onUpload={handleUploadFiles} />
             </Box>
 
             {
                 isFetching && (
-                    <Box w='full' maxWidth='container.md' mx='auto' mt='6'>
+                    <Box w='full' maxWidth='container.md' mx='auto' mt='6' px='6'>
                         <Skeleton h='2' maxW='200px' mb='2' w='full' />
                         <Skeleton h='2' maxW='400px' mb='2' w='full' />
                         <Skeleton h='2' maxW='300px' mb='2' w='full' />
@@ -108,18 +108,18 @@ const Fototeca = () => {
             {           
                 !!savedPictures && (savedPictures?.length ?? 0) > 0 && !isFetching && (
                     <>
-                        <Box w='full' maxWidth='container.md' mx='auto' mb='4' mt='6'>
+                        <Box w='full' maxWidth='container.md' mx='auto' mb='4' mt='6' px='6'>
                             <Text fontWeight='medium' fontSize='sm' color='gray.500'>Arquivos salvos na fototeca</Text>
                             <Text fontSize='xs' color='gray.500'>Os arquivos públicos poderão ser visualizados na tela inicial do site.</Text>
                             <Text fontSize='xs' color='gray.500'>Para privar um arquivo, assinale-o como privado desabilitando o campo azul.</Text>
                             <Text fontWeight='medium' fontSize='xs' color='gray.500'>Apenas você e os noivos poderão visualizar os arquivos privados.</Text>
                         </Box>
-                        <SimpleGrid w='full' maxWidth='container.md' mx='auto' mb='4' spacing='2' templateColumns={{base: 'repeat(2, 1fr)', md: 'repeat(5, 1fr)'}}>
+                        <SimpleGrid w='full' maxWidth='container.md' mx='auto' mb='4' spacing='1' templateColumns={{base: 'repeat(2, 1fr)', md: 'repeat(5, 1fr)'}} px='1'>
                             {
                                 savedPictures.map(picture => (
-                                    <GridItem key={picture.id} position='relative' rounded='base' overflow='hidden' height='120px'>
-                                        <Box bg='gray.200'>
-                                            <Image src={picture.originalUrl} alt={picture.originalUrl} width='150' height='150' style={{ objectFit: 'cover', width: '100%' }} />
+                                    <GridItem key={picture.id} position='relative' overflow='hidden' height='160px'>
+                                        <Box bg='gray.300'>
+                                            <Image src={picture.originalUrl} alt={picture.originalUrl} width='100%' height='160' style={{ objectFit: 'cover', width: '100%', objectPosition: 'top' }} />
                                         </Box>
 
                                         <Flex justifyContent='space-between' position='absolute' bottom='0' padding='2' bg='whiteAlpha.400' w='full' backdropFilter='blur(4px)' alignItems='center'>
