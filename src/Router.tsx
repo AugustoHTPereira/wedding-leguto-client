@@ -8,6 +8,7 @@ import GiftList from './Pages/GiftList';
 import GroomsmenManual from './Pages/GroomsmenManual';
 import Home from './Pages/Home';
 import NotFound from './Pages/NotFound';
+import Privacy from './Pages/Privacy';
 
 const ProtectedRoute = ({ children }: PropsWithChildren) => {
     const { isLoading, isSignedIn } = useIdentityContext();
@@ -32,6 +33,7 @@ const routes = createBrowserRouter([
     { path: "/gifts", element: <GiftList /> },
     { path: "/manual", element: <ProtectedRoute children={<GroomsmenManual />} /> },
     { path: "/fototeca", element: <ProtectedRoute children={<Fototeca />} /> },
+    { path: "/privacy", element: <Privacy /> },
     { path: "/not-found", element: <NotFound /> },
     { path: "*", element: <NotFound /> },
 ]);
