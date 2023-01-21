@@ -47,7 +47,7 @@ const GiftList = () => {
                     </Flex>
 
                     <Box>
-                        <SimpleGrid templateColumns={{ base: '1fr', md: '1fr 1fr 1fr' }} gridGap={{ base: '2', md: '4' }}>
+                        {/* <SimpleGrid templateColumns={{ base: '1fr', md: '1fr 1fr 1fr' }} gridGap={{ base: '2', md: '4' }}>
                                 <JokeGift />
 
                             <>
@@ -59,7 +59,9 @@ const GiftList = () => {
                                     })
                                 }
                             </>
-                        </SimpleGrid>
+                        </SimpleGrid> */}
+
+                        <Text>Hmmmmmm... A nossa lista ainda não ficou pronta.</Text>
                     </Box>
                 </Box>
             </Box>
