@@ -203,7 +203,7 @@ const GiftStack = ({ gifts }: GiftListProps) => {
             <Box mb='4'>
                 <Text fontWeight='semibold' mb='1'>Lista externa</Text>
                 <Text color='gray.500' fontSize='sm'>
-                    Querido convidado, não se limite a nossa lista.<br/>Fique a vontade para comprar o presente que quiser e onde quiser, usando como referência os que colocamos aqui.
+                    Querido convidado, não se limite a nossa lista.<br/>Fique a vontade para comprar o presente onde quiser.
                 </Text>
             </Box>
 
