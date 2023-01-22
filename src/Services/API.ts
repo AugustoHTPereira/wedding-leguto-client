@@ -5,7 +5,7 @@ const api = axios.create({
     baseURL: "https://leguto.somee.com/api"
 })
 
-const { 'leguto.identity.access_token': token } = parseCookies(undefined);
+const token = localStorage.getItem("leguto.identity.access_token");
 if (!!token)
     api.defaults.headers["Authorization"] = `Bearer ${token}`;
 

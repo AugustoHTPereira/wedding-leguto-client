@@ -1,5 +1,4 @@
 import { useToast } from '@chakra-ui/react';
-import { parseCookies, setCookie, destroyCookie } from 'nookies';
 import React, { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react';
 import { DefaultToast } from '../Contracts/ToastContract';
 import api from '../Services/API';
@@ -48,7 +47,7 @@ export const IdentityContextProvider = ({ children }: PropsWithChildren) => {
 
             const { 'access_token': token } = authResponse.data;
             api.defaults.headers['Authorization'] = `Bearer ${token}`;
-            setCookie(undefined, "leguto.identity.access_token", token);
+            localStorage.setItem("leguto.identity.access_token", token);
             setAccessToken(token);
             setCode(code);
             
@@ -69,10 +68,8 @@ export const IdentityContextProvider = ({ children }: PropsWithChildren) => {
             setId(id);
             setType(type);
     
-            setCookie(undefined, "leguto.identity.data", JSON.stringify(identityResponse.data));
-            window.location.href = "/";
+            localStorage.setItem("leguto.identity.data", JSON.stringify(identityResponse.data));
         } catch (error) {
-            window.location.href = "/";
             alert("Código inexistente")
         } finally {
             setIsLoading(false);
@@ -80,8 +77,7 @@ export const IdentityContextProvider = ({ children }: PropsWithChildren) => {
     }
 
     const handleSignout = () => {
-        destroyCookie(undefined, "leguto.identity.data");
-        destroyCookie(undefined, "leguto.identity.access_token");
+        localStorage.clear();
         setName("");
         setId(0);
         setType("");
@@ -94,13 +90,15 @@ export const IdentityContextProvider = ({ children }: PropsWithChildren) => {
         setIsLoading(true);
 
         try {
-            const {
-                "leguto.identity.data": data,
-                "leguto.identity.access_token": accessToken,
-            } = parseCookies(undefined);
+            // const {
+            //     "leguto.identity.data": data,
+            //     "leguto.identity.access_token": accessToken,
+            // } = parseCookies(undefined);
 
+            const data = localStorage.getItem("leguto.identity.data");
+            const accessToken = localStorage.getItem("leguto.identity.access_token");
             
-            if(!!data) {
+            if(!!data && !!accessToken) {
                 const { id, name, code, type } = JSON.parse(data);
                 setAccessToken(accessToken);
                 setId(id);

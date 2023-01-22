@@ -21,6 +21,8 @@ const AutomaticLogin = () => {
         await signin({
             code: id
         });
+
+        window.location.href = "/";
     }
 
     return (

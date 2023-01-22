@@ -4,6 +4,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import useIdentityContext from './Contexts/IdentityContext';
 import AutomaticLogin from './Pages/AutomaticLogin';
 import Fototeca from './Pages/Fototeca';
+import GiftDetail from './Pages/GiftDetail';
 import GiftList from './Pages/GiftList';
 import GroomsmenManual from './Pages/GroomsmenManual';
 import Home from './Pages/Home';
@@ -31,6 +32,7 @@ const routes = createBrowserRouter([
     { path: "/", element: <Home />, },
     { path: "/:id", element: <AutomaticLogin />, },
     { path: "/gifts", element: <GiftList /> },
+    { path: "/gifts/:id", element: <GiftDetail /> },
     { path: "/manual", element: <ProtectedRoute children={<GroomsmenManual />} /> },
     { path: "/fototeca", element: <ProtectedRoute children={<Fototeca />} /> },
     { path: "/privacy", element: <Privacy /> },
