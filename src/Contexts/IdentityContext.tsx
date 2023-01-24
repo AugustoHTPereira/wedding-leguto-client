@@ -100,12 +100,12 @@ export const IdentityContextProvider = ({ children }: PropsWithChildren) => {
             
             if(!!data && !!accessToken) {
                 const { id, name, code, type } = JSON.parse(data);
+                setIsSignedIn(true);
                 setAccessToken(accessToken);
                 setId(id);
                 setName(name);
                 setCode(code);
                 setType(type);
-                setIsSignedIn(true);
             }
         } 
         finally {

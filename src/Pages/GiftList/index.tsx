@@ -19,18 +19,24 @@ import {
     GridItem,
     Button,
     Tooltip,
+    HStack,
 } from '@chakra-ui/react';
 
 import Texture from '../../Assets/img/absurdity.png';
 import Brand from '../../Assets/img/brand.svg';
-import { ArrowForwardIcon, ChevronRightIcon, LinkIcon, Search2Icon } from '@chakra-ui/icons';
+import { ArrowForwardIcon, Search2Icon } from '@chakra-ui/icons';
 import { Link } from 'react-router-dom';
 import JaparatingaImage from '../../Assets/img/japaratinga.jpeg';
 import { GiftType } from '../../Contracts/Gifts';
 import api from '../../Services/API';
 import useIdentityContext from '../../Contexts/IdentityContext';
+import useHistoric from '../../Hooks/useHistoric';
+import Searcher from './components/Searcher';
 
 const GiftList = () => {
+    const { giftListAccess } = useHistoric();
+    const { isSignedIn, id } = useIdentityContext();
+
     const [gifts, setGifts] = useState<GiftType[]>([]);
 
     useEffect(() => {
@@ -42,6 +48,10 @@ const GiftList = () => {
 
         fetchGifts();
     }, [])
+
+    useEffect(() => {
+        giftListAccess({aditionalData: { isSignedIn, guestId: id }});
+    }, [isSignedIn, id])
     
     return (
         <>
@@ -55,18 +65,17 @@ const GiftList = () => {
 
                 <Box px='6' w='full' maxW='container.lg' mx='auto' mt='12'>
                     <Flex justifyContent='end' mb='4'>
-                        {/* <GuestGifts /> */}
                         <Searcher gifts={gifts} />
                     </Flex>
 
                     <Box>
-                        <Box mb='4'>
+                        {/* <Box mb='4'>
                             <Text fontWeight='semibold' mb='1'>Links de pagamento</Text>
                         </Box>
                         
                         <SimpleGrid mb='12' templateColumns={{ base: '1fr', md: '1fr 1fr 1fr' }} gridGap={{ base: '2', md: '4' }}>
                             <JokeGift />
-                        </SimpleGrid>
+                        </SimpleGrid> */}
 
                         <GiftStack gifts={gifts.filter(x => x.type === "external_link" || !x.type)} />
                     </Box>
@@ -79,45 +88,7 @@ const GiftList = () => {
 
 export default GiftList;
 
-interface SearcherProps {
-    gifts: GiftType[]
-}
 
-const Searcher = ({ gifts }: SearcherProps) => {
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const [search, setSearch] = useState<string>('');
-
-    return (
-        <>
-            <IconButton aria-label='search' icon={<Search2Icon />} colorScheme='teal' onClick={onOpen} />
-            <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>
-                        <Input value={search} onChange={e => setSearch(e.target.value)} variant='flushed' placeholder='Digite aqui para buscar' />
-                    </ModalHeader>
-                    <ModalBody>
-                        <VStack spacing='2' divider={<StackDivider />}>
-                            {
-                                !!search && gifts.filter(x => x.title.toLowerCase().includes(search.toLowerCase())).map(gift => (
-                                    <StackItem key={gift.title} w='full'>
-                                        <Flex w='full' justifyContent='space-between'>
-                                            <Box>
-                                                <Text fontWeight='semibold'>{gift.title}</Text>
-                                            </Box>
-                                            <IconButton disabled={gift.obtained} as='a' href={gift.link} aria-label={`Ver lista ${gift.title}`} icon={<ArrowForwardIcon />} />
-                                            {!!gift.obtained && (<Text>Hmmm... Alguém já reservou esse presente.</Text>)}
-                                        </Flex>
-                                    </StackItem>   
-                                ))
-                            }
-                        </VStack>
-                    </ModalBody>
-                </ModalContent>
-            </Modal>
-        </>
-    )
-}
 
 const JokeGift = () => {
     const btnRef = React.useRef<HTMLButtonElement>(null);
@@ -201,7 +172,6 @@ const GiftStack = ({ gifts }: GiftListProps) => {
     return (
         <Box>
             <Box mb='4'>
-                <Text fontWeight='semibold' mb='1'>Lista externa</Text>
                 <Text color='gray.500' fontSize='sm'>
                     Querido convidado, não se limite a nossa lista.<br/>Fique a vontade para comprar o presente onde quiser.
                 </Text>
@@ -209,35 +179,45 @@ const GiftStack = ({ gifts }: GiftListProps) => {
 
             <VStack>
                 {
-                    gifts.filter(x => !x.obtained).sort((a, b) => a.title > b.title ? 1 : -1).map(gift => (
+                    gifts.sort((a, b) => a.title > b.title ? 1 : -1).map(gift => (
                         <StackItem key={gift.id} w='full'>
-                            <Flex flexDirection={{ base: 'column', lg: 'row' }} align={{lg: 'center'}} justify={{lg: 'space-between'}} bg='white' borderRadius='base' boxShadow='sm' px='4' py='3'>
+                            <Flex as={Link} to={gift.id.toString()} align='center' justifyContent='space-between' bg='white' px='4' py='2' minH='16' borderRadius='lg' shadow='sm' color='gray.500'>
                                 <Box>
-                                    <Text fontSize='xs' color='gray.500'>
-                                        #{gift.id} - {gift.store}{gift.obtained ? " - ALGUÉM JÁ SEPAROU ESSE PRESENTE" : ""}
-                                    </Text>
+                                    {
+                                        gift.obtained && (
+                                            <Text mb='0' color='gray.400' fontSize='xs'>
+                                                Este presente já foi selecionado
+                                            </Text>
+                                        )
+                                    }
 
-                                    <Text fontWeight='semibold' color='gray.700'>
+                                    <Text color='gray.700'>
                                         {gift.title}
                                     </Text>
+
+                                    {!!gift.metadata && (
+                                        <HStack fontSize='xs' color='gray.500'>
+                                            {gift.metadata.map(metadata => {
+                                                if (metadata.key === "Voltage" && metadata.value === "220V") {
+                                                    return (
+                                                        <StackItem color='red.500' fontWeight='semibold'>
+                                                            <Text>{metadata.value}</Text>
+                                                        </StackItem>
+                                                    )
+                                                }
+
+                                                return (
+                                                    <StackItem>
+                                                        <Text>{metadata.value}</Text>
+                                                    </StackItem>
+                                                )
+                                            })}
+                                        </HStack>
+                                    )}
                                 </Box>
 
                                 <Box>
-                                    {/* <IconButton display={{ base: 'none', lg: 'flex' }} fontSize='xl' as={Link} to={gift.id.toString()} state={{ gift }} icon={<ChevronRightIcon />} aria-label="Access external url" colorScheme='green' />
-                                    <Button mt='4' display={{ base: 'flex', lg: 'none' }} as={Link} to={gift.id.toString()} state={{ gift }} colorScheme='green'>
-                                        Visualizar
-                                    </Button> */}
-
-                                    {
-                                        !!gift.link && (
-                                            <>
-                                                <IconButton display={{ base: 'none', lg: 'flex' }} target='_blank' fontSize='xl' as='a' href={gift.link} icon={<ChevronRightIcon />} aria-label="Access external url" colorScheme='green' />
-                                                <Button mt='4' display={{ base: 'flex', lg: 'none' }} target='_blank' as='a' href={gift.link} colorScheme='green'>
-                                                    Visualizar
-                                                </Button>
-                                            </>
-                                        )
-                                    }
+                                    <ArrowForwardIcon />
                                 </Box>
                             </Flex>
                         </StackItem>
@@ -271,7 +251,7 @@ const GiftStack = ({ gifts }: GiftListProps) => {
                                                 </Text>
                                             </Box>
                                             <Box>
-                                                <IconButton display={{ base: 'none', lg: 'flex' }} fontSize='xl' as={Link} to={gift.id.toString()} state={{ gift }} icon={<ChevronRightIcon />} aria-label="Access external url" />
+                                                <IconButton display={{ base: 'none', lg: 'flex' }} fontSize='xl' as={Link} to={gift.id.toString()} state={{ gift }} icon={<ArrowForwardIcon />} aria-label="Access external url" />
                                                 <Button mt='4' display={{ base: 'flex', lg: 'none' }} as={Link} to={gift.id.toString()} state={{ gift }}>
                                                     Visualizar
                                                 </Button>

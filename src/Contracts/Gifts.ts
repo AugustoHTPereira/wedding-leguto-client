@@ -7,5 +7,6 @@ export interface GiftType {
     id: number,
     price?: number,
     pictureUrl?: string,
-    guestsId?: number[]
+    guestsId?: number[],
+    metadata: { key: string, value: string }[]
 }

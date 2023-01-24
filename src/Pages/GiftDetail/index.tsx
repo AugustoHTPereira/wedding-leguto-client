@@ -1,170 +1,240 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, HStack, IconButton, Image, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, PinInput, PinInputField, Text, useDisclosure, useToast } from '@chakra-ui/react';
-import { Navigate, useLocation, useNavigate, useParams } from 'react-router';
+import { Alert, AlertDescription, AlertIcon, Box, Button, Flex, FormControl, FormLabel, HStack, IconButton, Image, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, PinInput, PinInputField, Skeleton, SkeletonText, StackDivider, StackItem, Text, useDisclosure, useToast, VStack } from '@chakra-ui/react';
+import { useNavigate, useParams } from 'react-router';
+import useIdentityContext, { SigninParams } from '../../Contexts/IdentityContext';
 import { GiftType } from '../../Contracts/Gifts';
 import Texture from '../../Assets/img/absurdity.png';
 import Brand from '../../Assets/img/brand.svg';
 import { Link } from 'react-router-dom';
-import { ChevronLeftIcon } from '@chakra-ui/icons';
 import api from '../../Services/API';
-import useIdentityContext from '../../Contexts/IdentityContext';
+import { ChevronLeftIcon } from '@chakra-ui/icons';
 
 const GiftDetail = () => {
-    const { isSignedIn, id, signin, isLoading: isSigninLoading } = useIdentityContext();
-    const [isTaking, setIsTaking] = useState<boolean>(false);
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const [ code, setCode ] = useState<string>('')
-    const toast = useToast({ isClosable: true });
-
+    const { id } = useParams();
+    const { id: guestId, isSignedIn, isLoading: isSigning, signin, name } = useIdentityContext();
+    const [ gift, setGift ] = useState<GiftType>({} as GiftType);
+    const [ isFetching, setIsFetching ] = useState<boolean>(true);
     const navigate = useNavigate();
-    const { state: { gift: _gift } } = useLocation();
+    const toast = useToast();
 
-    const [gift, setGift] = useState<GiftType>(_gift as GiftType);
-
-    const getGiftDetails = async () => {
-        const response = await api.get("/gift/"+ _gift.id)
-        setGift(response.data)
+    const fetch = async () => {
+        try {
+            setIsFetching(true);
+            const response = await api.get("/gift/" + id);
+            setGift(response.data);
+        } catch (error) {
+            
+        } finally {
+            setIsFetching(false);
+        }
     }
 
     useEffect(() => {
-        getGiftDetails();
-    }, [])
+        fetch();
+    }, [id])
 
-    const goBack = () => navigate(-1);
+    const back = () => navigate(-1)
 
-    const take = async () => {
-        if (!isSignedIn) {
-            onOpen();
-            return;
-        }
+    const iTake = !!gift?.guestsId?.filter(x => x == guestId).length;
 
-        setIsTaking(true)
-        try {
-            await api.post(`/gift/${gift.id}/take`);
-            await getGiftDetails();
-            toast({
-                description: "Beleza. Nós assinalamos esse presente lá na lista como reservado. Se você quiser alterar seu presente, não se esqueça de desmarcar esse aqui pra que outro convidado possa nos presentear ok?!",
-                title: "Presente reservado!",
-                status: 'success'
-            })
-        } finally {
-            setIsTaking(false);
-        }
+    const unTake = async () => {
+        await api.delete(`/gift/${id}/take`)
+        setGift(prev => ({...prev, obtained: false }))
     }
 
-    const untake = async () => {
-        setIsTaking(true)
-        try {
-            await api.delete(`/gift/${gift.id}/take`);
-            await getGiftDetails();
-            toast({
-                title: 'Sucesso',
-                description: "Beleza. Nós liberamos esse presente lá na lista de presentes para os outros convidados.",
-                status: 'success'
-            })
-        } finally {
-            setIsTaking(false);
-        }
-    }
-
-    const handleLogin = async () => {
-        await signin({ code })
-        
-        await api.post(`/gift/${gift.id}/take`);
+    const onTake = () => {
+        setGift(prev => ({...prev, obtained: true, guestsId: [ guestId ] }))
         toast({
-            description: "Beleza. Nós assinalamos esse presente lá na lista como reservado. Se você quiser alterar seu presente, não se esqueça de desmarcar esse aqui pra que outro convidado possa nos presentear ok?!",
-            title: "Presente reservado!",
+            title: "Sucesso!",
+            description: "Você selecionou o presente. Essa informação é sigilosa, apenas você e os noivos podem vê-la.",
             status: 'success'
         })
-        onClose();
-        await getGiftDetails();
-    }
-
-    if (!gift) {
-        return <Navigate to="/not-found" />
     }
 
     return (
         <>
-            <Box bgImage={Texture} bgSize='4px' minH='100vh' w='full' pb='32'>
+            <Box bgImage={Texture} bgSize='4px' minH='100vh' w='full' pb='32' px='6'>
                 <Box pt='6' mx='auto' w='max-content'>
                     <Link to="/">
                         <Image src={Brand} w='16' mx='auto' />
                     </Link>
                     <Text textAlign='center' fontSize='sm' mt='2' fontWeight='medium'>LISTA DE PRESENTES</Text>
+                    {!!name && <Text textAlign='center' fontSize='sm' mt='0' color='gray.400' fontWeight='medium'>Oi {name}!</Text>}
                 </Box>
-                <Box px='6' w='full' maxW='container.sm' mx='auto' mt='12'>
-                    <Box>
-                        <IconButton onClick={goBack} aria-label='back' icon={<ChevronLeftIcon />} fontSize='xl' mb='4' />
-                    </Box>
 
-                    <Box mb='12'>
-                        <Text fontWeight='bold' fontSize='4xl'>
-                            {gift.title}
-                        </Text>
+                <Box pt='4'  w='full' maxW='container.sm' mx='auto'>
+                    <IconButton mb='4' variant='outline' icon={<ChevronLeftIcon />} aria-label="back" onClick={back} />
 
-                    </Box>
+                    {isFetching ? <Skeleton w='10' h='4' /> : <Text color='gray.400' fontSize='xs'>#{id}</Text>}
+                
+                    {!isFetching && !gift && (
+                        <Flex w='full' alignItems='center' justify='center' textAlign='center'>
+                            <Text>Hmmmm.. Não estamos encontrando esse presente.</Text>
+                            <Text>Os noivos já foram contatados e logo já devem arrumar isso.</Text>
+                        </Flex>
+                    )}
 
-                    <Box>
-                        {
-                            !gift.obtained ? (
-                                <>
-                                    <Button w='full' mb='2' as='a' target='_blank' href={gift.link}>
-                                        Acessar {gift.store}
-                                    </Button>
-                                    
-                                    <Button isLoading={isSigninLoading || isTaking} w='full' onClick={take} colorScheme='green'>
-                                        Esse eu vou dar!
-                                    </Button>
-                                </>
-                            ) : !!gift.guestsId?.includes(id) ? (
-                                <>
-                                    <Button w='full' mb='2' as='a' target='_blank' href={gift.link}>
-                                        Acessar {gift.store}
-                                    </Button>
-                                    
-                                    <Button isLoading={isSigninLoading || isTaking} w='full' onClick={untake} colorScheme='red' variant='outline'>
-                                        Eu vou trocar meu presente {':('}
-                                    </Button>
-                                </>
-                            ) : (
-                                <Box bg='gray.100' p='4' borderRadius='base' w='full' textAlign='center' color='gray.500'>
-                                    Hmmm... Parece que alguém já vai nos dar esse presente.
+                    {isFetching ? <Skeleton w='72' h='8' mt='2' /> : <Text mt='2' color='gray.700' fontSize='2xl' fontWeight='semibold'>{gift?.title}</Text>}
+
+                    {!!gift?.obtained && !isFetching && !iTake && (
+                        <Alert status='warning' mt='6'>
+                            <AlertIcon />
+                            <AlertDescription>
+                                Hmmmm.. Parece que alguém já vai dar esse presente.
+                            </AlertDescription>
+                        </Alert>
+                    )}
+
+                    {!!gift?.obtained && !isFetching && !!iTake && (
+                        <Alert status='success' mt='6'>
+                            <AlertIcon />
+                            <AlertDescription>
+                                <Box>
+                                    <Text>Você selecionou esse presente.</Text>
+                                    <Button onClick={unTake} size='sm' mt='2' colorScheme='red'>Vou trocar de presente</Button>
                                 </Box>
-                            )
-                        }
+                            </AlertDescription>
+                        </Alert>
+                    )}
+
+                    
+
+                    {
+                        isFetching ? (
+                            <Box mt='8'>
+                                <Skeleton w='72' h='6' mb='1' />
+                                <Skeleton w='24' h='6' mb='1' />
+                                <Skeleton w='32' h='6' mb='1' />
+                                <Skeleton w='56' h='6' mb='1' />
+                            </Box>
+                        ) : (
+                            <VStack divider={<StackDivider />} mt='8' color='gray.500' spacing='1' fontSize='md'>
+                                {
+                                    gift?.metadata && gift.metadata.map(meta => (
+                                        <StackItem key={meta.key} w='full'>
+                                            {meta.key === "Voltage" && meta.value === "220V" ? (<Text color='red' fontWeight='bold'>Voltagem: 220V</Text>) : (<Text>{meta.key}: {meta.value}</Text>)}
+                                        </StackItem>
+                                    ))
+                                }
+                            </VStack>
+                        )
+                    }
+
+                    {isFetching ? <Skeleton w='full' h='12' mt='12' /> : !!gift && <TakeModal beforeTake={onTake} isSignedIn={isSignedIn} isSigning={isSigning} signin={signin} gift={gift} />}
+                    {isFetching ? <Skeleton w='full' h='12' mt='2' /> : <Button as='a' href={gift?.link} target='_blank' w='full' mt='2' colorScheme='teal' variant='outline'>{gift?.type === "external_link" ? "Visualizar na " + gift.store : gift?.type === "payment_link" ? "Comprar" : "Visualizar"}</Button>}
+
+                    <Box mt='4' color='gray.400' textAlign='center'>
+                        <Text>Querido convidado, não se limite a nossa lista.<br/>Fique a vontade para comprar o presente onde quiser.</Text>
+                    </Box>
+
+                    <Box mt='10'>
+                        {isFetching ? <SkeletonText maxW='400px' /> : (
+                            <Box>
+                                <Text color='gray.700' fontWeight='semibold' fontSize='sm'>Endereço para entregas</Text>
+
+                                <VStack spacing='1' fontSize='md' mt='4' divider={<StackDivider />} color='gray.500'>
+                                    <StackItem w='full'>
+                                        Rua: Antônio Andrade Mendes
+                                    </StackItem>
+                                    <StackItem w='full'>
+                                        Bairro: Jardim Primavera
+                                    </StackItem>
+                                    <StackItem w='full'>
+                                        Nº 117
+                                    </StackItem>
+                                    <StackItem w='full'>
+                                        Monsenhor Paulo - MG
+                                    </StackItem>
+                                    <StackItem w='full'>
+                                        CEP: 37405-000
+                                    </StackItem>
+                                    <StackItem w='full'>
+                                        Referência: Casa do Sionel - Ao lado da Serralheria D'Stak
+                                    </StackItem>
+
+                                    <StackItem fontSize='xs' textAlign='center'>37405-000, Monsenhor Paulo - MG, Rua Antônio Andrade Mendes, 117, Bairro Jardim Primavera, Casa, Casa do Sionel ao lado da Serralheria D'Stak</StackItem>
+                                </VStack>
+                            </Box>
+                        )}
                     </Box>
                 </Box>
             </Box>
+        </>
+    )
+}
 
-            <Modal isOpen={isOpen} onClose={onClose} >
+export default GiftDetail;
+
+interface TakeModalProps {
+    gift: GiftType,
+    isSignedIn: boolean,
+    isSigning: boolean,
+    signin: (params: SigninParams) => Promise<void>,
+    beforeTake: () => void,
+}
+
+const TakeModal = ({ gift, isSignedIn, isSigning, signin, beforeTake }: TakeModalProps) => {
+    const { isOpen, onClose, onOpen } = useDisclosure();
+    const [ code, setCode ] = useState<string>("")
+    const [ isTaking, setIsTaking ] = useState<boolean>(false);
+
+    const onButtonClick = async () => {
+        if (!isSignedIn) {
+            onOpen();
+            return;
+        }
+
+        await take();
+    }
+
+    const onLogin = async () => {
+        console.log("Login with code ", code);
+        await signin({ code });
+        await take();
+        onClose();
+    }
+
+    const take = async () => {
+        setIsTaking(true);
+        await api.post(`/gift/${gift.id}/take`)
+        beforeTake();
+        onClose();
+        setIsTaking(false);
+    }
+
+    return (
+        <>
+            <Button disabled={!!gift.obtained} isLoading={isTaking} w='full' mt='12' colorScheme='teal' onClick={onButtonClick}>Esse eu vou dar</Button>
+
+            <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
-
                 <ModalContent>
-                    <ModalHeader textAlign='center'>
-                        Antes de prosseguir, informe o código do seu convite.
+                    <ModalHeader>
+                        Acessar
                     </ModalHeader>
 
                     <ModalBody>
-                        <HStack mx='auto' justify='center'>
-                            <PinInput value={code} onChange={setCode}>
-                                <PinInputField />
-                                <PinInputField />
-                                <PinInputField />
-                                <PinInputField />
-                                <PinInputField />
-                                <PinInputField />
-                            </PinInput>
-                        </HStack>
+                        <FormControl>
+                            <FormLabel>Informe o código contido no convite:</FormLabel>
+                            <HStack>
+                                <PinInput value={code} onChange={setCode}>
+                                    <PinInputField />
+                                    <PinInputField />
+                                    <PinInputField />
+                                    <PinInputField />
+                                    <PinInputField />
+                                    <PinInputField />
+                                </PinInput>
+                            </HStack>
+                        </FormControl>
+                        <Text color='gray.400' mt='2' fontSize='sm'>O código está disponível abaixo do QRCode no seu convite.</Text>
                     </ModalBody>
 
                     <ModalFooter>
-                        <Button onClick={handleLogin} colorScheme='teal' w='full'>Prosseguir</Button>
+                        <Button isLoading={isSigning} colorScheme='teal' w='full' onClick={onLogin}>Pronto</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>
         </>
     )
 }
-
-export default GiftDetail;

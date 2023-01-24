@@ -27,25 +27,29 @@ import BackgroundImage from '../../Assets/img/wedding-bg.jpg';
 import BackgroundImage2 from '../../Assets/img/wedding-bg-2.jpg';
 import Brand from '../../Assets/img/brand-white.svg';
 import useWeddingDate from '../../Hooks/useWeddingDate';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { HamburgerIcon } from '@chakra-ui/icons';
 import useIdentityContext from '../../Contexts/IdentityContext';
 import { Picture } from '../Fototeca';
 import api from '../../Services/API';
+import useHistoric from '../../Hooks/useHistoric';
 
 const Home = () => {
     const { dateStr, diff: { d: days } } = useWeddingDate();
-    const { isLoading, isSignedIn, name, type, signout } = useIdentityContext();
-
+    const { isLoading, isSignedIn, name, type, signout, id } = useIdentityContext();
+    const { homeAccess } = useHistoric();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const btnRef = React.useRef(null)
-    const navigate  =useNavigate();
 
     const [isLargerThanMd] = useMediaQuery('(min-width: 1024px)');
 
     const handleSignout = () => {
         signout();
     }
+
+    useEffect(() => {
+        homeAccess({aditionalData: { isSignedIn, guestId: id }});
+    }, [isSignedIn, id])
 
     return (
         <>
