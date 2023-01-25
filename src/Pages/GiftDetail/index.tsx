@@ -14,6 +14,7 @@ const GiftDetail = () => {
     const { id: guestId, isSignedIn, isLoading: isSigning, signin, name } = useIdentityContext();
     const [ gift, setGift ] = useState<GiftType>({} as GiftType);
     const [ isFetching, setIsFetching ] = useState<boolean>(true);
+    const [ iTake, setITake ] = useState<boolean>(false);
     const navigate = useNavigate();
     const toast = useToast();
 
@@ -33,9 +34,11 @@ const GiftDetail = () => {
         fetch();
     }, [id])
 
-    const back = () => navigate(-1)
+    useEffect(() => {
+        setITake(!!gift.guestsId?.filter(x => x == guestId) ?? false)
+    }, [gift, guestId])
 
-    const iTake = !!gift?.guestsId?.filter(x => x == guestId).length;
+    const back = () => navigate(-1)
 
     const unTake = async () => {
         await api.delete(`/gift/${id}/take`)
@@ -65,7 +68,7 @@ const GiftDetail = () => {
                 <Box pt='4'  w='full' maxW='container.sm' mx='auto'>
                     <IconButton mb='4' variant='outline' icon={<ChevronLeftIcon />} aria-label="back" onClick={back} />
 
-                    {isFetching ? <Skeleton w='10' h='4' /> : <Text color='gray.400' fontSize='xs'>#{id}</Text>}
+                    {isFetching ? <Skeleton w='10' h='4' /> : <Text color='gray.400' fontSize='xs'>#{id} - {gift.title}</Text>}
                 
                     {!isFetching && !gift && (
                         <Flex w='full' alignItems='center' justify='center' textAlign='center'>
@@ -74,7 +77,13 @@ const GiftDetail = () => {
                         </Flex>
                     )}
 
-                    {isFetching ? <Skeleton w='44' h='44' mt='2' /> : !!gift.pictures && <Image mt='2' shadow='sm' bg='white' borderRadius='base' maxW='44' maxH='44' src={gift.pictures[0]} objectFit='contain' />}
+                    {
+                        gift.pictures && (
+                            <Flex align='center' justify='center' p='4' bg='white' w={{ base: 'full', md: '44' }} h='44' shadow='sm' mt='4' borderRadius='base'>
+                                <Image src={gift.pictures[0]} w='full' h='36' objectFit='contain' borderRadius='base' />
+                            </Flex>
+                        )
+                    }
 
                     {isFetching ? <Skeleton w='72' h='8' mt='4' /> : <Text mt='4' color='gray.700' fontSize='2xl' fontWeight='semibold'>{gift?.title}</Text>}
 
@@ -109,7 +118,7 @@ const GiftDetail = () => {
                                 <Skeleton w='32' h='6' mb='1' />
                                 <Skeleton w='56' h='6' mb='1' />
                             </Box>
-                        ) : (
+                        ) : !!gift?.metadata && (
                             <VStack divider={<StackDivider />} mt='8' color='gray.500' spacing='1' fontSize='md'>
                                 {
                                     gift?.metadata && gift.metadata.map(meta => (
