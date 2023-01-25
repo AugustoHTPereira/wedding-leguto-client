@@ -137,33 +137,6 @@ const JokeGift = () => {
     )
 }
 
-interface GiftCardProps {
-    gift: GiftType
-}
-
-const GiftCard = ({ gift }: GiftCardProps) => {
-    const priceFormatter = Intl.NumberFormat("pt-br", {currency: 'brl', style: 'currency' });
-    const formatedPrice = gift.price ? priceFormatter.format(gift.price) : undefined;
-    return (
-        <GridItem w='full' bg='white' borderRadius='base' boxShadow='base' p='4' as={Flex} flexDirection='column'>
-            <Box mb='4' w='full'>
-                <Image src={gift.pictureUrl} data-image-url={gift.pictureUrl} w='full' objectFit='cover' h='180px' rounded='base' />
-            </Box>
-
-            <Box mb='4' flex='1' w='full'>
-                <Text fontWeight='semibold' mb='2'>{gift.title}</Text>
-                <Text fontSize='2xl' textAlign='right' lineHeight='1'>{formatedPrice}</Text>
-            </Box>
-
-            <Box w='full'>
-                <Button w='full' colorScheme='green' as={Link} to={gift.id.toString()} state={{ gift }}>
-                    Visualizar
-                </Button>
-            </Box>
-        </GridItem>
-    )
-}
-
 interface GiftListProps {
     gifts: GiftType[]
 }
@@ -181,40 +154,46 @@ const GiftStack = ({ gifts }: GiftListProps) => {
                 {
                     gifts.sort((a, b) => a.title > b.title ? 1 : -1).map(gift => (
                         <StackItem key={gift.id} w='full'>
-                            <Flex as={Link} to={gift.id.toString()} align='center' justifyContent='space-between' bg='white' px='4' py='2' minH='16' borderRadius='lg' shadow='sm' color='gray.500'>
-                                <Box>
-                                    {
-                                        gift.obtained && (
-                                            <Text mb='0' color='gray.400' fontSize='xs'>
-                                                Este presente já foi selecionado
-                                            </Text>
-                                        )
-                                    }
+                            <Flex as={Link} to={gift.id.toString()} align='center' justifyContent='space-between' bg={gift.obtained ? 'gray.50' : 'white'} p='4' pr='6' minH='16' borderRadius='lg' shadow={gift.obtained ? 'none' : 'sm'} color='gray.500'>
+                                <Flex align='center'>
+                                    <Box mr='4'>
+                                        { !!gift.pictures && <Image borderRadius='base' h='12' w='12' objectFit='contain' src={gift.pictures[0]} /> }
+                                    </Box>
 
-                                    <Text color='gray.700'>
-                                        {gift.title}
-                                    </Text>
+                                    <Box>
+                                        {
+                                            gift.obtained && (
+                                                <Text color='yellow.500' mb='0' fontSize='xs'>
+                                                    Este presente já foi selecionado
+                                                </Text>
+                                            )
+                                        }
 
-                                    {!!gift.metadata && (
-                                        <HStack fontSize='xs' color='gray.500'>
-                                            {gift.metadata.map(metadata => {
-                                                if (metadata.key === "Voltage" && metadata.value === "220V") {
+                                        <Text color='gray.700' fontWeight='medium'>
+                                            {gift.title}
+                                        </Text>
+
+                                        {!!gift.metadata && (
+                                            <HStack fontSize='xs' color='gray.500'>
+                                                {gift.metadata.map(metadata => {
+                                                    if (metadata.key === "Voltage" && metadata.value === "220V") {
+                                                        return (
+                                                            <StackItem color='red.500' fontWeight='semibold'>
+                                                                <Text>{metadata.value}</Text>
+                                                            </StackItem>
+                                                        )
+                                                    }
+
                                                     return (
-                                                        <StackItem color='red.500' fontWeight='semibold'>
+                                                        <StackItem>
                                                             <Text>{metadata.value}</Text>
                                                         </StackItem>
                                                     )
-                                                }
-
-                                                return (
-                                                    <StackItem>
-                                                        <Text>{metadata.value}</Text>
-                                                    </StackItem>
-                                                )
-                                            })}
-                                        </HStack>
-                                    )}
-                                </Box>
+                                                })}
+                                            </HStack>
+                                        )}
+                                    </Box>
+                                </Flex>
 
                                 <Box>
                                     <ArrowForwardIcon />
