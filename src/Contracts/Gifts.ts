@@ -6,7 +6,7 @@ export interface GiftType {
     obtained: boolean,
     id: number,
     price?: number,
-    pictureUrl?: string,
+    pictures?: string[],
     guestsId?: number[],
     metadata: { key: string, value: string }[]
 }

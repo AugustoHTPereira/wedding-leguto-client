@@ -74,7 +74,9 @@ const GiftDetail = () => {
                         </Flex>
                     )}
 
-                    {isFetching ? <Skeleton w='72' h='8' mt='2' /> : <Text mt='2' color='gray.700' fontSize='2xl' fontWeight='semibold'>{gift?.title}</Text>}
+                    {isFetching ? <Skeleton w='44' h='44' mt='2' /> : !!gift.pictures && <Image mt='2' shadow='sm' bg='white' borderRadius='base' maxW='44' maxH='44' src={gift.pictures[0]} objectFit='contain' />}
+
+                    {isFetching ? <Skeleton w='72' h='8' mt='4' /> : <Text mt='4' color='gray.700' fontSize='2xl' fontWeight='semibold'>{gift?.title}</Text>}
 
                     {!!gift?.obtained && !isFetching && !iTake && (
                         <Alert status='warning' mt='6'>
@@ -120,7 +122,7 @@ const GiftDetail = () => {
                         )
                     }
 
-                    {isFetching ? <Skeleton w='full' h='12' mt='12' /> : !!gift && <TakeModal beforeTake={onTake} isSignedIn={isSignedIn} isSigning={isSigning} signin={signin} gift={gift} />}
+                    {isFetching ? <Skeleton w='full' h='12' mt='6' /> : !!gift && <TakeModal beforeTake={onTake} isSignedIn={isSignedIn} isSigning={isSigning} signin={signin} gift={gift} />}
                     {isFetching ? <Skeleton w='full' h='12' mt='2' /> : <Button as='a' href={gift?.link} target='_blank' w='full' mt='2' colorScheme='teal' variant='outline'>{gift?.type === "external_link" ? "Visualizar na " + gift.store : gift?.type === "payment_link" ? "Comprar" : "Visualizar"}</Button>}
 
                     <Box mt='4' color='gray.400' textAlign='center'>
@@ -128,7 +130,7 @@ const GiftDetail = () => {
                     </Box>
 
                     <Box mt='10'>
-                        {isFetching ? <SkeletonText maxW='400px' /> : (
+                        {isFetching ? <><SkeletonText maxW='400px' /><SkeletonText mt='4' maxW='600px' /><SkeletonText mt='4' maxW='200px' /></> : (
                             <Box>
                                 <Text color='gray.700' fontWeight='semibold' fontSize='sm'>Endereço para entregas</Text>
 
@@ -204,7 +206,7 @@ const TakeModal = ({ gift, isSignedIn, isSigning, signin, beforeTake }: TakeModa
 
     return (
         <>
-            <Button disabled={!!gift.obtained} isLoading={isTaking} w='full' mt='12' colorScheme='teal' onClick={onButtonClick}>Esse eu vou dar</Button>
+            <Button disabled={!!gift.obtained} isLoading={isTaking} w='full' mt='6' colorScheme='teal' onClick={onButtonClick}>Esse eu vou dar</Button>
 
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
