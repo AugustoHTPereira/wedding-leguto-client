@@ -8,6 +8,7 @@ import Brand from '../../Assets/img/brand.svg';
 import { Link } from 'react-router-dom';
 import api from '../../Services/API';
 import { ChevronLeftIcon } from '@chakra-ui/icons';
+import ButtonRedirect from './components/ButtonRedirect';
 
 const GiftDetail = () => {
     const { id } = useParams();
@@ -135,7 +136,7 @@ const GiftDetail = () => {
                     }
 
                     {isFetching ? <Skeleton w='full' h='12' mt='6' /> : !!gift && <TakeModal beforeTake={onTake} isSignedIn={isSignedIn} isSigning={isSigning} signin={signin} gift={gift} />}
-                    {isFetching ? <Skeleton w='full' h='12' mt='2' /> : <Button as='a' href={gift?.link} target='_blank' w='full' mt='2' colorScheme='teal' variant='outline'>{gift?.type === "external_link" ? "Visualizar na " + gift.store : gift?.type === "payment_link" ? "Comprar" : "Visualizar"}</Button>}
+                    {isFetching ? <Skeleton w='full' h='12' mt='2' /> : <ButtonRedirect gift={gift} />}
 
                     <Box mt='4' color='gray.400' textAlign='center'>
                         <Text>Querido convidado, não se limite a nossa lista.<br/>Fique a vontade para comprar o presente onde quiser.</Text>

@@ -45,7 +45,7 @@ const GiftList = () => {
                     </Flex>
 
                     <Box>
-                        <GiftStack gifts={gifts.filter(x => x.type === "external_link" || !x.type)} />
+                        <GiftStack gifts={gifts} />
                     </Box>
                 </Box>
             </Box>

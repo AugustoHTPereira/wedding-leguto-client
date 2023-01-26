@@ -21,8 +21,9 @@ const GiftStack = ({ gifts }: GiftStackProps) => {
 
     const { hash } = useLocation();
     useEffect(() => {
-        if (!!hash)
-            document.querySelector(hash)?.scrollIntoView({behavior: 'smooth', inline: 'start', block: 'start'});
+        if (!!hash) {
+            document.querySelector(decodeURI(hash))?.scrollIntoView({behavior: 'smooth', inline: 'start', block: 'start'});
+        }
     }, [hash])
 
     return (
