@@ -35,7 +35,7 @@ const GiftDetail = () => {
     }, [id])
 
     useEffect(() => {
-        setITake(!!gift.guestsId?.filter(x => x == guestId) ?? false)
+        setITake(!!gift.guestsId?.filter(x => x == guestId)?.length ?? false)
     }, [gift, guestId])
 
     const back = () => navigate(-1)
@@ -120,6 +120,9 @@ const GiftDetail = () => {
                             </Box>
                         ) : !!gift?.metadata && (
                             <VStack divider={<StackDivider />} mt='8' color='gray.500' spacing='1' fontSize='md'>
+                                <StackItem w='full'>
+                                    <Text>{gift.category}</Text>
+                                </StackItem>
                                 {
                                     gift?.metadata && gift.metadata.map(meta => (
                                         <StackItem key={meta.key} w='full'>
