@@ -8,6 +8,7 @@ import Brand from '../../Assets/img/brand.svg';
 import { Link } from 'react-router-dom';
 import api from '../../Services/API';
 import { ChevronLeftIcon } from '@chakra-ui/icons';
+import useHistoric from '../../Hooks/useHistoric';
 import ButtonRedirect from './components/ButtonRedirect';
 
 const GiftDetail = () => {
@@ -18,12 +19,17 @@ const GiftDetail = () => {
     const [ iTake, setITake ] = useState<boolean>(false);
     const navigate = useNavigate();
     const toast = useToast();
+    const { giftDetailAccess } = useHistoric();
 
     const fetch = async () => {
         try {
             setIsFetching(true);
-            const response = await api.get("/gift/" + id);
-            setGift(response.data);
+            if (!!id) {
+                const response = await api.get("/gift/" + id);
+
+                giftDetailAccess({ giftId: parseInt(id), aditionalData: { isSignedIn, guestId, giftId: id } });
+                setGift(response.data);
+            }
         } catch (error) {
             
         } finally {
