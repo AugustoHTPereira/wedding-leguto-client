@@ -9,7 +9,7 @@ const AutomaticLogin = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!id || (code == id && isSignedIn)) {
+        if (!id) {
             navigate("/")
             return;
         }
