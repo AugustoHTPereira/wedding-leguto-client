@@ -4,6 +4,7 @@ export interface GiftType {
     link?: string,
     store?: string,
     obtained: boolean,
+    obtainedByMe: boolean,
     category: string,
     id: number,
     price?: number,
