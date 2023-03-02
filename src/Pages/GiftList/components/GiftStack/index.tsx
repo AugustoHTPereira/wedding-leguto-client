@@ -63,7 +63,7 @@ const GiftStack = ({ gifts }: GiftStackProps) => {
                                         {
                                             gifts.filter(gift => gift.category === category).sort((a, b) => a.title > b.title ? 1 : -1).map(gift => (
                                                 <StackItem key={gift.id} w='full'>
-                                                    <Flex as={Link} to={gift.id.toString()} align='center' justifyContent='space-between' bg={gift.obtained ? 'gray.50' : 'white'} p='4' pr='6' minH='16' borderRadius='lg' shadow={gift.obtained ? 'none' : 'sm'} color='gray.500'>
+                                                    <Flex as={Link} to={gift.id.toString()} align='center' justifyContent='space-between' bg={gift.obtainedByMe ? 'green.100' : gift.obtained ? 'gray.50' : 'white'} p='4' pr='6' minH='16' borderRadius='lg' shadow={gift.obtained ? 'none' : 'sm'} color='gray.500' border={gift.obtainedByMe ? '2px solid green' : {}}>
                                                         <Flex align='center'>
                                                             <Box mr='2' minW='14'>
                                                                 { !!gift.pictures && <Image borderRadius='base' h='12' w='12' objectFit='contain' src={gift.pictures[0]} /> }
@@ -72,8 +72,8 @@ const GiftStack = ({ gifts }: GiftStackProps) => {
                                                             <Box>
                                                                 {
                                                                     gift.obtained && (
-                                                                        <Text color='yellow.500' mb='0' fontSize='xs'>
-                                                                            {!!isSignedIn && (gift.guestsId?.indexOf(guestId) || -1) >= 0 ? "Você selecionou esse presente" : "Este presente já foi selecionado"}
+                                                                        <Text color={gift.obtainedByMe ? 'green.700' : 'yellow.500'} mb='0' fontSize='sm' fontWeight='semibold'>
+                                                                            {!!isSignedIn && !!gift.obtainedByMe ? "Muito obrigado! Você selecionou esse presente." : "Este presente já foi selecionado."}
                                                                         </Text>
                                                                     )
                                                                 }
