@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Flex, Image, StackItem, Text, useDisclosure, VStack, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, StackDivider, GridItem, Button } from '@chakra-ui/react';
+import { Box, Flex, Image, StackItem, Text, useDisclosure, VStack, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, StackDivider, GridItem, Button, Skeleton, Spinner } from '@chakra-ui/react';
 import Texture from '../../Assets/img/absurdity.png';
 import Brand from '../../Assets/img/brand.svg';
 import { Link } from 'react-router-dom';
@@ -15,20 +15,28 @@ const GiftList = () => {
     const { giftListAccess } = useHistoric();
     const { isSignedIn, id } = useIdentityContext();
     const [gifts, setGifts] = useState<GiftType[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const fetchGifts = async () => {
-            const response = await api.get("/gift");
-            setGifts(response.data)
+            setIsLoading(true);
+            try {
+                const response = await api.get("/gift");
+                setGifts(response.data)
+            }
+            finally {
+                setIsLoading(false);
+            }
+
         }
 
         fetchGifts();
     }, [])
 
     useEffect(() => {
-        giftListAccess({aditionalData: { isSignedIn, guestId: id }});
+        giftListAccess({ aditionalData: { isSignedIn, guestId: id } });
     }, [isSignedIn, id])
-    
+
     return (
         <>
             <Box bgImage={Texture} bgSize='4px' minH='100vh' w='full' pb='32'>
@@ -40,12 +48,22 @@ const GiftList = () => {
                 </Box>
 
                 <Box px='6' w='full' maxW='container.lg' mx='auto' mt='12'>
-                    <Flex justifyContent='end' mb='4'>
-                        <Searcher gifts={gifts} />
-                    </Flex>
 
                     <Box>
-                        <GiftStack gifts={gifts} />
+                        {!!isLoading ? (
+                            <Box textAlign='center'>
+                                <Spinner color='gray.500' mb='2' />
+                                <Text color='gray.500' fontWeight='semibold' fontSize='sm'>CARREGANDO</Text>
+                            </Box>
+                        ) :
+                            <>
+                                <Flex justifyContent='end' mb='4'>
+                                    <Searcher gifts={gifts} />
+                                </Flex>
+                                
+                                <GiftStack gifts={gifts} />
+                            </>
+                        }
                     </Box>
                 </Box>
             </Box>
