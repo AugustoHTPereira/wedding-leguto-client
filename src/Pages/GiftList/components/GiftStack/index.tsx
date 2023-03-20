@@ -1,5 +1,5 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import { Flex, VStack, StackItem, HStack, Box, Text, Image } from "@chakra-ui/react";
+import { Flex, VStack, StackItem, HStack, Box, Text, Image, SimpleGrid, GridItem } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
@@ -22,7 +22,7 @@ const GiftStack = ({ gifts }: GiftStackProps) => {
     const { hash } = useLocation();
     useEffect(() => {
         if (!!hash) {
-            document.querySelector(decodeURI(hash))?.scrollIntoView({behavior: 'smooth', inline: 'start', block: 'start'});
+            document.querySelector(decodeURI(hash))?.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'start' });
         }
     }, [hash])
 
@@ -30,7 +30,7 @@ const GiftStack = ({ gifts }: GiftStackProps) => {
         <Box>
             <Box mb='4'>
                 <Text color='gray.500' fontSize='sm'>
-                    Querido convidado, não se limite a nossa lista.<br/>Fique a vontade para comprar o presente onde quiser.
+                    Querido convidado, não se limite a nossa lista.<br />Fique a vontade para comprar o presente onde quiser.
                 </Text>
             </Box>
 
@@ -39,7 +39,7 @@ const GiftStack = ({ gifts }: GiftStackProps) => {
                 <Flex wrap='wrap' mx='-3'>
                     {
                         categories.map(category => (
-                            <Box mb='1' p='2' px='4' bg='white' color='gray.500' mx='1' shadow='base' borderRadius='full' cursor='pointer' fontSize='sm' fontWeight='semibold' lineHeight='1' as={Link} to={{hash: category.toLowerCase().replace(' ', '-')}}>
+                            <Box mb='1' p='2' px='4' bg='white' color='gray.500' mx='1' shadow='base' borderRadius='full' cursor='pointer' fontSize='sm' fontWeight='semibold' lineHeight='1' as={Link} to={{ hash: category.toLowerCase().replace(' ', '-') }}>
                                 {category}
                             </Box>
                         ))
@@ -59,59 +59,71 @@ const GiftStack = ({ gifts }: GiftStackProps) => {
                                 </Box>
 
                                 <Box flex='1'>
-                                    <VStack>
+                                    <SimpleGrid templateColumns={{ base: '1fr 1fr', md: '1fr 1fr 1fr', lg: '1fr 1fr 1fr 1fr 1fr' }} gap='6'>
                                         {
                                             gifts.filter(gift => gift.category === category).sort((a, b) => a.title > b.title ? 1 : -1).map(gift => (
-                                                <StackItem key={gift.id} w='full'>
-                                                    <Flex as={Link} to={gift.id.toString()} align='center' justifyContent='space-between' bg={gift.obtainedByMe ? 'green.100' : gift.obtained ? 'gray.50' : 'white'} p='4' pr='6' minH='16' borderRadius='lg' shadow={gift.obtained ? 'none' : 'sm'} color='gray.500' border={gift.obtainedByMe ? '2px solid green' : {}}>
-                                                        <Flex align='center'>
-                                                            <Box mr='2' minW='14'>
-                                                                { !!gift.pictures && <Image borderRadius='base' h='12' w='12' objectFit='contain' src={gift.pictures[0]} /> }
-                                                            </Box>
+                                                <GridItem key={gift.id}>
+                                                    <Box
+                                                        h='full'
+                                                        pb='2'
+                                                        borderBottom='1px solid'
+                                                        borderBottomColor='gray.200'
+                                                        as={Link}
+                                                        to={gift.id.toString()}
+                                                        display='block'
+                                                    >
+                                                        <Box mb='4' bg='white' p='2' rounded='md' overflow='hidden'>
+                                                            {
+                                                                !!gift.pictures && <Image
+                                                                    rounded='base'
+                                                                    overflow='hidden'
+                                                                    h='32'
+                                                                    w='full'
+                                                                    objectFit='scale-down'
+                                                                    src={gift.pictures[0]}
+                                                                    filter={gift.obtained ? 'grayscale(1)' : ''}
+                                                                />
+                                                            }
+                                                        </Box>
 
-                                                            <Box>
-                                                                {
-                                                                    gift.obtained && (
-                                                                        <Text color={gift.obtainedByMe ? 'green.700' : 'yellow.500'} mb='0' fontSize='sm' fontWeight='semibold'>
-                                                                            {!!isSignedIn && !!gift.obtainedByMe ? "Muito obrigado! Você selecionou esse presente." : "Este presente já foi selecionado."}
-                                                                        </Text>
-                                                                    )
-                                                                }
+                                                        <Box px='2'>
+                                                            <Text fontSize='sm' color={gift.obtained ? 'gray.400' : ''}>
+                                                                {gift.title}
+                                                            </Text>
 
-                                                                <Text color='gray.700' fontWeight='medium'>
-                                                                    {gift.title}
-                                                                </Text>
-
-                                                                {!!gift.metadata && (
-                                                                    <HStack fontSize='xs' color='gray.500'>
-                                                                        {gift.metadata.map(metadata => {
-                                                                            if (metadata.key === "Voltage" && metadata.value === "220V") {
-                                                                                return (
-                                                                                    <StackItem color='red.500' fontWeight='semibold'>
-                                                                                        <Text>{metadata.value}</Text>
-                                                                                    </StackItem>
-                                                                                )
-                                                                            }
-
+                                                            {!!gift.metadata && (
+                                                                <HStack fontSize='xs' color='gray.500'>
+                                                                    {gift.metadata.map(metadata => {
+                                                                        if (metadata.key === "Voltage" && metadata.value === "220V") {
                                                                             return (
-                                                                                <StackItem>
+                                                                                <StackItem color='red.500' fontWeight='semibold'>
                                                                                     <Text>{metadata.value}</Text>
                                                                                 </StackItem>
                                                                             )
-                                                                        })}
-                                                                    </HStack>
-                                                                )}
-                                                            </Box>
-                                                        </Flex>
+                                                                        }
 
-                                                        <Box>
-                                                            <ArrowForwardIcon />
+                                                                        return (
+                                                                            <StackItem>
+                                                                                <Text>{metadata.value}</Text>
+                                                                            </StackItem>
+                                                                        )
+                                                                    })}
+                                                                </HStack>
+                                                            )}
+
+                                                            {
+                                                                gift.obtained && (
+                                                                    <Text color={gift.obtainedByMe ? 'green.500' : 'yellow.500'} mt='2' fontSize='xs' fontWeight='semibold'>
+                                                                        {!!isSignedIn && !!gift.obtainedByMe ? "MUITO OBRIGADO! VOCÊ SELECIONOU ESTE PRESENTE" : "ESTE PRESENTE JÁ FOI SELECIONADO"}
+                                                                    </Text>
+                                                                )
+                                                            }
                                                         </Box>
-                                                    </Flex>
-                                                </StackItem>
+                                                    </Box>
+                                                </GridItem>
                                             ))
                                         }
-                                    </VStack>
+                                    </SimpleGrid>
                                 </Box>
                             </StackItem>
                         );
