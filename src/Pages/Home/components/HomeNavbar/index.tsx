@@ -57,7 +57,7 @@ const HomeNavbar = () => {
                         <StackItem>
                             <Text
                                 as={Link}
-                                to='/gifts'
+                                to='/history'
                                 color='gray.100'
                             >
                                 Nossa história
