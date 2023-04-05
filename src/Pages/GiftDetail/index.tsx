@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, AlertDescription, AlertIcon, Box, Button, Flex, FormControl, FormLabel, HStack, IconButton, Image, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, PinInput, PinInputField, Skeleton, SkeletonText, StackDivider, StackItem, Text, useDisclosure, useToast, VStack } from '@chakra-ui/react';
+import { Alert, AlertDescription, AlertIcon, Box, Button, Flex, FormControl, FormLabel, HStack, IconButton, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, PinInput, PinInputField, Skeleton, SkeletonText, StackDivider, StackItem, Text, useDisclosure, useToast, VStack } from '@chakra-ui/react';
 import { useNavigate, useParams } from 'react-router';
 import useIdentityContext, { SigninParams } from '../../Contexts/IdentityContext';
 import { GiftType } from '../../Contracts/Gifts';
@@ -10,6 +10,7 @@ import api from '../../Services/API';
 import { ChevronLeftIcon } from '@chakra-ui/icons';
 import useHistoric from '../../Hooks/useHistoric';
 import ButtonRedirect from './components/ButtonRedirect';
+import HomeNavbar from '../Home/components/HomeNavbar';
 
 const GiftDetail = () => {
     const { id } = useParams();
@@ -63,19 +64,18 @@ const GiftDetail = () => {
 
     return (
         <>
-            <Box bgImage={Texture} bgSize='4px' minH='100vh' w='full' pb='32' px='6'>
-                <Box pt='6' mx='auto' w='max-content'>
-                    <Link to="/">
-                        <Image src={Brand} w='16' mx='auto' />
-                    </Link>
-                    <Text textAlign='center' fontSize='sm' mt='2' fontWeight='medium'>LISTA DE PRESENTES</Text>
-                    {!!name && <Text textAlign='center' fontSize='sm' mt='0' color='gray.400' fontWeight='medium'>Oi {name}!</Text>}
-                </Box>
+            <Box
+                w='full'
+                minH='100vh'
+                bg='black'
+                pb='20'
+            >
+                <HomeNavbar />
 
-                <Box pt='4'  w='full' maxW='container.sm' mx='auto'>
-                    <IconButton mb='4' variant='outline' icon={<ChevronLeftIcon />} aria-label="back" onClick={back} />
+                <Box px='6' pt='4'  w='full' maxW='container.sm' mx='auto'>
+                    <IconButton mb='4' variant='outline' color='white' icon={<ChevronLeftIcon fontSize='2xl' />} aria-label="back" onClick={back} />
 
-                    {isFetching ? <Skeleton w='10' h='4' /> : <Text color='gray.400' fontSize='xs'>#{id} - {gift.title}</Text>}
+                    {isFetching ? <Skeleton w='10' h='4' /> : <Text color='gray.200' fontSize='xs'>#{id} - {gift.title}</Text>}
                 
                     {!isFetching && !gift && (
                         <Flex w='full' alignItems='center' justify='center' textAlign='center'>
@@ -92,7 +92,7 @@ const GiftDetail = () => {
                         )
                     }
 
-                    {isFetching ? <Skeleton w='72' h='8' mt='4' /> : <Text mt='4' color='gray.700' fontSize='2xl' fontWeight='semibold'>{gift?.title}</Text>}
+                    {isFetching ? <Skeleton w='72' h='8' mt='4' /> : <Text mt='4' color='white' fontSize='4xl' lineHeight='1' fontWeight='semibold'>{gift?.title}</Text>}
 
                     {!!gift?.obtained && !isFetching && !iTake && (
                         <Alert status='warning' mt='6'>
@@ -144,16 +144,16 @@ const GiftDetail = () => {
                     {isFetching ? <Skeleton w='full' h='12' mt='6' /> : !!gift && <TakeModal beforeTake={onTake} isSignedIn={isSignedIn} isSigning={isSigning} signin={signin} gift={gift} />}
                     {isFetching ? <Skeleton w='full' h='12' mt='2' /> : <ButtonRedirect gift={gift} />}
 
-                    <Box mt='4' color='gray.400' textAlign='center'>
+                    <Box mt='4' color='white' textAlign='center'>
                         <Text>Querido convidado, não se limite a nossa lista.<br/>Fique a vontade para comprar o presente onde quiser.</Text>
                     </Box>
 
                     <Box mt='10'>
                         {isFetching ? <><SkeletonText maxW='400px' /><SkeletonText mt='4' maxW='600px' /><SkeletonText mt='4' maxW='200px' /></> : (
                             <Box>
-                                <Text color='gray.700' fontWeight='semibold' fontSize='sm'>Endereço para entregas</Text>
+                                <Text color='white' fontWeight='semibold' fontSize='sm'>Endereço para entregas</Text>
 
-                                <VStack spacing='1' fontSize='md' mt='4' divider={<StackDivider />} color='gray.500'>
+                                <VStack spacing='1' fontSize='md' mt='4' divider={<StackDivider />} color='white'>
                                     <StackItem w='full'>
                                         Rua: Antônio Andrade Mendes
                                     </StackItem>
@@ -225,18 +225,19 @@ const TakeModal = ({ gift, isSignedIn, isSigning, signin, beforeTake }: TakeModa
 
     return (
         <>
-            <Button disabled={!!gift.obtained} isLoading={isTaking} w='full' mt='6' colorScheme='teal' onClick={onButtonClick}>Esse eu vou dar</Button>
+            <Button disabled={!!gift.obtained} isLoading={isTaking} w='full' mt='6' colorScheme='teal' size='lg' onClick={onButtonClick}>Esse eu vou dar</Button>
 
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
-                <ModalContent>
+                <ModalContent bg='blackAlpha.900' backdropFilter='blur(32px)' color='white' border='1px solid' borderColor='gray.900'>
+                    <ModalCloseButton />
                     <ModalHeader>
                         Acessar
                     </ModalHeader>
 
                     <ModalBody>
                         <FormControl>
-                            <FormLabel>Informe o código contido no convite:</FormLabel>
+                            <FormLabel>Informe o código contido no convite</FormLabel>
                             <HStack>
                                 <PinInput value={code} onChange={setCode}>
                                     <PinInputField />

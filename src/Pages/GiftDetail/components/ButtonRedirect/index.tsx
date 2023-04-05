@@ -13,8 +13,8 @@ const ButtonRedirect = ({ gift }: ButtonRedirectProps) => {
 
     return (
         <>
-            {!consult && <Button as='a' href={gift?.link} target='_blank' w='full' mt='2' colorScheme='teal' variant='outline'>{buttonText}</Button>}
-            {!!consult && <Button w='full' mt='2' onClick={onOpen} colorScheme='teal' variant='outline'>{buttonText}</Button>}
+            {!consult && <Button as='a' href={gift?.link} target='_blank' w='full' mt='2' colorScheme='teal' variant='outline' size='lg'>{buttonText}</Button>}
+            {!!consult && <Button w='full' mt='2' onClick={onOpen} colorScheme='teal' variant='outline' size='lg'>{buttonText}</Button>}
 
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />

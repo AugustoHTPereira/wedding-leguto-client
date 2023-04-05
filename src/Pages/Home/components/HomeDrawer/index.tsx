@@ -2,9 +2,11 @@ import React from 'react';
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { useDisclosure, Text, IconButton, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, VStack, StackItem } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import useIdentityContext from '../../../../Contexts/IdentityContext';
 
 const HomeDrawer = () => {
     const { onOpen, ...rest } = useDisclosure();
+    const { isSignedIn, type, signout } = useIdentityContext();
 
     return (
         <>
@@ -35,6 +37,21 @@ const HomeDrawer = () => {
 
                     <DrawerBody>
                         <VStack spacing='6'>
+                            {
+                                !!isSignedIn && type === 'groomsmen' && (
+                                    <StackItem w='full'>
+                                        <Text
+                                            as={Link}
+                                            to='/manual'
+                                            color='gray.100'
+                                            fontSize='xl'
+                                        >
+                                            Manual dos padrinhos
+                                        </Text>
+                                    </StackItem>
+                                )
+                            }
+
                             <StackItem w='full'>
                                 <Text
                                     as={Link}
@@ -67,6 +84,20 @@ const HomeDrawer = () => {
                                     Ajuda
                                 </Text>
                             </StackItem>
+
+                            {
+                                !!isSignedIn && (
+                                    <StackItem w='full'>
+                                        <Text
+                                            onClick={signout}
+                                            color='red.500'
+                                            fontSize='xl'
+                                        >
+                                            Sair
+                                        </Text>
+                                    </StackItem>
+                                )
+                            }
                         </VStack>
                     </DrawerBody>
                 </DrawerContent>

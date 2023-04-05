@@ -3,9 +3,12 @@ import { Flex, HStack, StackItem, Box, Text, Image } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import HomeDrawer from "../HomeDrawer";
 import Brand from '../../../../Assets/img/brand-white.svg';
+import useIdentityContext from '../../../../Contexts/IdentityContext';
 
 
 const HomeNavbar = () => {
+    const { type, isSignedIn, signout } = useIdentityContext();
+
     return (
         <>
             <Box
@@ -37,6 +40,20 @@ const HomeNavbar = () => {
                     </Link>
 
                     <HStack spacing='8' display={{ base: 'none', md: 'flex' }}>
+                        {
+                            !!isSignedIn && type === 'groomsmen' && (
+                                <StackItem>
+                                    <Text
+                                        as={Link}
+                                        to='/manual'
+                                        color='gray.100'
+                                    >
+                                        Manual dos padrinhos
+                                    </Text>
+                                </StackItem>
+                            )
+                        }
+
                         <StackItem>
                             <Text
                                 as={Link}
@@ -66,6 +83,17 @@ const HomeNavbar = () => {
                                 Ajuda
                             </Text>
                         </StackItem>
+
+                        {!!isSignedIn && (
+                            <StackItem>
+                                <Text
+                                    onClick={signout}
+                                    color='red.500'
+                                >
+                                    Sair
+                                </Text>
+                            </StackItem>
+                        )}
                     </HStack>
 
                     <HomeDrawer />
