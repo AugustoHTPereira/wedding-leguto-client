@@ -82,6 +82,7 @@ const GiftStack = ({ gifts }: GiftStackProps) => {
                                                                     objectFit='scale-down'
                                                                     src={gift.pictures[0]}
                                                                     filter={gift.obtained ? 'grayscale(1)' : ''}
+                                                                    opacity={gift.obtained ? '0.4' : '1'}
                                                                 />
                                                             }
                                                         </Box>

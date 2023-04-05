@@ -63,6 +63,8 @@ const Home = () => {
                     h='100vh'
                     position='relative'>
                     <Flex
+                        zIndex='docked'
+                        position='relative'
                         align='center'
                         justify='space-between'
                         w='full'
@@ -231,39 +233,28 @@ const HomeFototeca = () => {
         fetchPhotos();
     }, [])
 
-    if (!photos.length && !isLoading)
+    if (!photos.length || isLoading)
         return null;
 
     return (
-        <Box w='full' p='1' py={{base: '1', lg: '32'}} bgImage={`url(${photos[0]?.originalUrl})`} bgColor='white' backgroundSize='cover' backgroundPosition='center' backgroundRepeat='repeat-y' position='relative'>
-            <Box w='full' position='absolute' left='0' top='0' bottom='0' right='0' bg='blackAlpha.400' backdropFilter='blur(62px)' />
+        <Box 
+            w='full' 
+            h='full'
+            p='1' 
+            py={{base: '1', lg: '32'}} 
+            bgImage={`url(${photos[0]?.originalUrl})`} 
+            bgColor='white' 
+            backgroundSize='cover' 
+            backgroundPosition='center' 
+            backgroundRepeat='repeat-y' 
+            position='relative'
+        >
+            <Box w='full' h='full' position='absolute' left='0' top='0' bottom='0' right='0' bg='blackAlpha.400' backdropFilter='blur(42px)' />
 
             <Box w='full' maxW='container.lg' mx='auto'>
                 {
-                    isLoading && (
-                        <SimpleGrid templateColumns={{base: '1fr 1fr', md: '1fr 1fr 1fr', xl: '1fr 1fr 1fr 1fr'}} gridGap='1'>
-                            <GridItem>
-                                <Skeleton h='160px' w='full' />
-                            </GridItem>
-                            <GridItem>
-                                <Skeleton h='160px' w='full' />
-                            </GridItem>
-                            <GridItem>
-                                <Skeleton h='160px' w='full' />
-                            </GridItem>
-                            <GridItem>
-                                <Skeleton h='160px' w='full' />
-                            </GridItem>
-                            <GridItem>
-                                <Skeleton h='160px' w='full' />
-                            </GridItem>
-                        </SimpleGrid>
-                    )
-                }
-
-                {
-                    !isLoading && !!photos.length && (
-                        <SimpleGrid templateColumns={{base: '1fr 1fr', md: '1fr 1fr 1fr', xl: '1fr 1fr 1fr 1fr'}} gridGap='1' userSelect='none'>
+                    !!photos.length && (
+                        <SimpleGrid templateColumns={{base: '1fr 1fr', md: '1fr 1fr 1fr', xl: '1fr 1fr 1fr 1fr'}} gridGap='0.5' userSelect='none'>
                         {
                             photos.map(photo => (
                                 <GridItem key={photo.id}>

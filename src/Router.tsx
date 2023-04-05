@@ -7,7 +7,8 @@ import Fototeca from './Pages/Fototeca';
 import GiftDetail from './Pages/GiftDetail';
 import GiftList from './Pages/GiftList';
 import GroomsmenManual from './Pages/GroomsmenManual';
-import Home from './Pages/Home';
+import Home from './Pages/Home/index';
+import HomeV2 from './Pages/Home/index.v2';
 import NotFound from './Pages/NotFound';
 import Privacy from './Pages/Privacy';
 
@@ -30,6 +31,7 @@ const ProtectedRoute = ({ children }: PropsWithChildren) => {
 
 const routes = createBrowserRouter([
     { path: "/", element: <Home />, },
+    { path: "/v2", element: <HomeV2 />, },
     { path: "/:id", element: <AutomaticLogin />, },
     { path: "/gifts", element: <GiftList /> },
     { path: "/gifts/:id", element: <GiftDetail /> },

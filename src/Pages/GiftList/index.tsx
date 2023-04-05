@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Flex, Image, StackItem, Text, useDisclosure, VStack, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, StackDivider, GridItem, Button, Skeleton, Spinner } from '@chakra-ui/react';
+import { Box, Flex, Image, Text, Spinner, useToast } from '@chakra-ui/react';
 import Texture from '../../Assets/img/absurdity.png';
 import Brand from '../../Assets/img/brand.svg';
 import { Link } from 'react-router-dom';
@@ -16,6 +16,7 @@ const GiftList = () => {
     const { isSignedIn, id } = useIdentityContext();
     const [gifts, setGifts] = useState<GiftType[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const toast = useToast();
 
     useEffect(() => {
         const fetchGifts = async () => {
@@ -23,6 +24,15 @@ const GiftList = () => {
             try {
                 const response = await api.get("/gift");
                 setGifts(response.data)
+            }
+            catch(err: any) {
+                toast({
+                    status: 'error',
+                    title: 'Falha!',
+                    description: 'Não foi possível carregar a lista de presentes. Por favor, tente novamente mais tarde.',
+                    duration: 1000*5,
+                    isClosable: true,
+                })
             }
             finally {
                 setIsLoading(false);
