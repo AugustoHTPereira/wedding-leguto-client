@@ -20,21 +20,33 @@ const HomeMainContent = () => {
                 <Box
                     position='absolute'
                     bottom='0'
-                    pb='20'
+                    pb='24'
                 >
+
                     <Text
-                        mb='1'
                         color='gray.200'
-                        fontSize={{ base: 'sm', md: 'md' }}
+                        fontSize='6xl'
+                        fontWeight='bold'
+                        lineHeight='1'
+                        letterSpacing='wider'
                     >
-                        Restam {days} dias para a cerimônia.
+                        LEGUTO
+                    </Text>
+
+                    <Text
+                        color='gray.200'
+                        mb='4'
+                        lineHeight='1'
+                        letterSpacing='wide'
+                    >
+                        LEILANNE E AUGUSTO
                     </Text>
 
                     <HStack
                         color='gray.200'
                         spacing='4'
-                        divider={<StackDivider opacity='.2' />}
                         mb='4'
+                        divider={<StackDivider opacity='.2' />}
                         fontSize={{ base: 'sm', md: 'md' }}
                         flexDir={{ base: 'column', md: 'row' }}
                     >
@@ -48,30 +60,14 @@ const HomeMainContent = () => {
                             <Text>Campanha, MG</Text>
                         </StackItem>
                     </HStack>
-
+                    
                     <Text
+                        mb='1'
                         color='gray.200'
-                        fontSize={{ base: '5xl', md: '6xl' }}
+                        fontSize={{ base: 'sm', md: 'md' }}
                         fontWeight='semibold'
-                        lineHeight='1'
-                        mb='4'
                     >
-                        Leilanne e Augusto
-                    </Text>
-
-                    <Text
-                        color='gray.200'
-                        maxW='xl'
-                        fontSize={{ base: 'xs', md: 'md' }}
-                    >
-                        “Deus mudou o teu caminho até juntares com o meu e guardou a tua vida separando-a para mim. Para onde fores, irei; onde tu repousares, repousarei. Teu Deus será o meu Deus. Teu caminho o meu será.”
-                        <Text
-                            fontWeight='bold'
-                            as='span'
-                        >
-                            {' '}
-                            (Rute 1:16,17)
-                        </Text>
+                        Restam {days} dias para a cerimônia.
                     </Text>
                 </Box>
             </Box>

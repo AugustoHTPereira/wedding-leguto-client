@@ -10,7 +10,6 @@ const HomeWelcomeSection = () => {
                 w='full'
             >
                 <Text
-                    color='gray.800'
                     fontSize='3xl'
                     textAlign='center'
                     mb='4'
@@ -18,7 +17,6 @@ const HomeWelcomeSection = () => {
                     Sejam bem-vindos, amigos e familiares!
                 </Text>
                 <Text
-                    color='gray.800'
                     textAlign='center'
                     maxW='xl'
                     mx='auto'

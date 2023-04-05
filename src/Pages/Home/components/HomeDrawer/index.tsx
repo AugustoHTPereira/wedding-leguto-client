@@ -13,6 +13,7 @@ const HomeDrawer = () => {
                 icon={<HamburgerIcon fontSize='2xl' />}
                 colorScheme='blackAlpha'
                 display={{ base: 'initial', md: 'none' }}
+                backgroundColor='transparent'
                 onClick={onOpen}
             />
 
@@ -28,7 +29,7 @@ const HomeDrawer = () => {
                             maxW='sm'
                             lineHeight='8'
                         >
-                            Bem vindo(a) ao site do nosso casamento!
+                            Bem-vindo(a) ao site do nosso casamento
                         </Text>
                     </DrawerHeader>
 

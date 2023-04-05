@@ -14,7 +14,8 @@ const HomeNavbar = () => {
 
             <Box
                 px='6'
-                bg='black'
+                bg='blackAlpha.700'
+                backdropFilter='blur(32px)'
                 borderBottom='1px'
                 borderBottomColor='whiteAlpha.100'
                 position='fixed'
@@ -59,7 +60,7 @@ const HomeNavbar = () => {
                         <StackItem>
                             <Text
                                 as={Link}
-                                to='/gifts'
+                                to='/help'
                                 color='gray.100'
                             >
                                 Ajuda

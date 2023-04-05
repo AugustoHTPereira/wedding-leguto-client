@@ -51,7 +51,7 @@ const HomePhototeca = () => {
 
     return (
         <Box
-            px='6'
+            px='0.5'
             py={{ base: '12', md: '32' }}
             position='relative'
             backgroundImage={`url(${Background})`}

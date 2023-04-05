@@ -20,13 +20,13 @@ const CookieConcent = () => {
     return (
         <>
             <Box position='fixed' bottom='0' left='0' p='4'>
-                <Box p='6' w='full' color='white' maxW='container.sm' bg='blackAlpha.700' backdropFilter='blur(25px)' rounded='base' shadow='base'>
+                <Box p='6' w='full' color='white' maxW='container.sm' bg='blackAlpha.600' backdropFilter='blur(25px)' rounded='base' shadow='base'>
                     <Box mb='4'>
                         <Text fontWeight='semibold'>Este site faz uso de cookies.</Text>
                     </Box>
 
                     <Box mb='4'>
-                        <Text>
+                        <Text fontSize='xs'>
                             Nós fazemos uso de cookies para melhorar a sua experiência.
                             Ao continuar navegando pelo site você concorda com essa abordagem.
                         </Text>
