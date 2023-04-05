@@ -329,7 +329,7 @@ const HomeWelcomeSection = () => {
                     maxW='xl'
                     mx='auto'
                 >
-                    Nós, com o apoio de nossos familiares e de Deus, vamos nos casar no dia <b>16 de junho de 2023</b>. Contamos com a sua presença na <b>Catedral de Santo Antônio</b> em <b>Campanha, MG</b>.
+                    Nós, com o apoio de nossa família e de Deus, vamos nos casar no dia <b>16 de junho de 2023</b>. Contamos com a sua presença na <b>Catedral de Santo Antônio</b> em <b>Campanha, MG</b>.
                 </Text>
             </Box>
         </Box>
