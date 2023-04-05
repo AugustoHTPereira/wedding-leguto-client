@@ -7,38 +7,33 @@ import Men from '../../Assets/img/men.png';
 import Wom from '../../Assets/img/woman.png';
 import Bol from '../../Assets/img/bolth.png';
 import useIdentityContext from '../../Contexts/IdentityContext';
+import HomeNavbar from '../Home/components/HomeNavbar';
 
 const GroomsmensManual: Record<string, string> = {
-    "Roque e Sirlene": Bol,
-    "Marcelo e Cintia": Bol,
-    "André e Monique": Bol,
-    "Hiago e Sabrina": Bol,
-    "Rodrigo e Vitória": Bol,
-    "Milerson e Nara": Bol,
-    "Anderson e Dariana": Bol,
-    "Geisla": Wom,
-    "Guilherme": Men,
-    "Fernando": Men,
-    "Gabrielly": Wom,
-    "Evellyn": Wom,
-    "Arisson": Men
+    "roque e sirlene": Bol,
+    "marcelo e cintia": Bol,
+    "andré e monique": Bol,
+    "hiago e sabrina": Bol,
+    "rodrigo e vitória": Bol,
+    "milerson e nara": Bol,
+    "anderson e dariana": Bol,
+    "geisla": Wom,
+    "guilherme": Men,
+    "fernando": Men,
+    "gabrielly": Wom,
+    "evellyn": Wom,
+    "arisson": Men
 }
 
 const GroomsmenManual = () => {
     const {name} = useIdentityContext();
 
     return (
-        <Box bgImage={Texture} bgSize='4px' minH='100vh' w='full' px='6'>
-            <Box pt='6' mx='auto' w='max-content'>
-                <Link to="/">
-                    <Image src={Brand} w='16' mx='auto' />
-                </Link>
+        <Box bg='black' minH='100vh' w='full' px='6'>
+            <HomeNavbar />
 
-                <Text textAlign='center' fontSize='sm' mt='2' fontWeight='medium'>MANUAL DOS PADRINHOS</Text>
-            </Box>
-
-            <Box w='full' maxW='container.sm' mx='auto' mt='6' borderRadius='base' boxShadow='base'>
-                <Image src={GroomsmensManual[name]} w='full' />
+            <Box w='full' maxW='sm' mx='auto' mt='6' borderRadius='xl' boxShadow='base' overflow='hidden'>
+                <Image src={GroomsmensManual[name.toLowerCase()]} w='full' />
             </Box>
         </Box>
     )
