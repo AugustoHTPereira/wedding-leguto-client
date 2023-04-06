@@ -68,7 +68,7 @@ const History = () => {
 
                         <Text mb='6'>
                             Passado alguns dias, mais precisamente no dia 18 de junho de 2017, o atual noivo decide então conhecer a família da atual noiva. Aqui então, o nervosismo
-                            toma conta de todos. Afinal, o rapazinho do cabelo amarelo que trabalha no Pereira, filho do Sionel, iria pedir a mão da filha do Luis Paulo em namoro.
+                            toma conta de todos. Afinal, o rapazinho do cabelo amarelo que trabalha no Pereira, filho do Sionel, iria pedir a mão da filha do Luiz Paulo em namoro.
                         </Text>
 
                         <Image
@@ -100,7 +100,7 @@ const History = () => {
                         />
 
                         <Text mb='6'>
-                            Passaram-se 4 anos de muita alegria, conquistas e aprendizado, decidimos dar um passo além. Decidimos que íamos noivar.
+                            Passaram-se 5 anos de muita alegria, conquistas e aprendizado, decidimos dar um passo além. Decidimos que íamos noivar.
                             <br />
                             Em 18 de junho de 2022, com o apoio de nossas famílias e de Deus, iniciamos nossa nova etapa. <b>Ficamos noivos.</b>
                         </Text>
