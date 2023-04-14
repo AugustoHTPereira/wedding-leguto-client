@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { SimpleGrid, GridItem, Box, Image, Text, usePrefersReducedMotion, keyframes, useToast } from '@chakra-ui/react';
 import api from '../../../../Services/API';
 import { Picture } from '../../../Fototeca';
-import Background from '../../../../Assets/img/wedding-bg-2.jpg';
+import Background from "../../../../Assets/img/i-Q9tb5gn-X3.jpg"
 
 const backgroundBlurKeyframe = keyframes`
     from { opacity: 0 }
@@ -55,6 +55,7 @@ const HomePhototeca = () => {
             py={{ base: '12', md: '32' }}
             position='relative'
             backgroundImage={`url(${Background})`}
+            bgPosition='center top'
             backgroundRepeat='no-repeat'
             backgroundSize='cover'
             w='full'
@@ -67,7 +68,7 @@ const HomePhototeca = () => {
                 bottom='0'
                 top='0'
                 bg='blackAlpha.300'
-                backdropFilter='blur(16px)'
+                backdropFilter='blur(8px)'
                 animation={backgroundBlurAnimation}
             />
 

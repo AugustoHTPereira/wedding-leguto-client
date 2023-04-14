@@ -1,6 +1,8 @@
 import React from 'react';
 import { useToken, HStack, StackDivider, StackItem, Box, Text } from "@chakra-ui/react";
 import useWeddingDate from "../../../../Hooks/useWeddingDate";
+import BackgroundPhoto from "../../../../Assets/img/IMG_7635.jpg"
+import BackgroundPhoto_SM from "../../../../Assets/img/IMG_7025.jpg"
 
 const HomeMainContent = () => {
     const fullHeight = useToken('sizes', '16')
@@ -9,7 +11,27 @@ const HomeMainContent = () => {
     return (
         <Box
             px='6'
+            bgImage={{ base: BackgroundPhoto_SM, lg: BackgroundPhoto }}
+            bgPosition={{
+                base: '',
+                lg: 'center 10%'
+            }}
+            bgSize={{
+                base: 'cover',
+                lg: ''
+            }}
+            bgRepeat='no-repeat'
+            position='relative'
         >
+            <Box 
+                display={{ base: 'block', lg: 'none' }}
+                position='absolute' 
+                bottom='0'
+                left='0'
+                right='0'
+                bg='linear-gradient(0deg, rgba(0,0,0,0.9) 10%, rgba(0,0,0,0) 100%)'
+            />
+
             <Box
                 mx='auto'
                 maxW='container.xl'
@@ -22,9 +44,9 @@ const HomeMainContent = () => {
                     bottom='0'
                     pb='24'
                 >
-
                     <Text
-                        color='gray.200'
+                        color='white'
+                        textShadow='md'
                         fontSize='6xl'
                         fontWeight='bold'
                         lineHeight='1'
@@ -34,7 +56,8 @@ const HomeMainContent = () => {
                     </Text>
 
                     <Text
-                        color='gray.200'
+                        color='white'
+                        textShadow='md'
                         mb='4'
                         lineHeight='1'
                         letterSpacing='wide'
@@ -43,7 +66,8 @@ const HomeMainContent = () => {
                     </Text>
 
                     <HStack
-                        color='gray.200'
+                        color='white'
+                        textShadow='md'
                         spacing='4'
                         mb='4'
                         divider={<StackDivider opacity='.2' />}
@@ -63,7 +87,8 @@ const HomeMainContent = () => {
                     
                     <Text
                         mb='1'
-                        color='gray.200'
+                        color='white'
+                        textShadow='md'
                         fontSize={{ base: 'sm', md: 'md' }}
                         fontWeight='semibold'
                     >

@@ -17,7 +17,7 @@ const HomeNavbar = () => {
 
             <Box
                 px='6'
-                bg='blackAlpha.700'
+                bg='blackAlpha.600'
                 backdropFilter='blur(32px)'
                 borderBottom='1px'
                 borderBottomColor='whiteAlpha.100'
