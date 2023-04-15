@@ -10,6 +10,7 @@ const HomeMainContent = () => {
 
     return (
         <Box
+            pt='16'
             px='6'
             bgImage={{ base: BackgroundPhoto_SM, lg: BackgroundPhoto }}
             bgPosition={{
@@ -29,7 +30,8 @@ const HomeMainContent = () => {
                 bottom='0'
                 left='0'
                 right='0'
-                bg='linear-gradient(0deg, rgba(0,0,0,0.9) 10%, rgba(0,0,0,0) 100%)'
+                bg='linear-gradient(0deg, rgba(0,0,0,0.8) 10%, rgba(0,0,0,0) 100%)'
+                height='50vh'
             />
 
             <Box
@@ -37,7 +39,7 @@ const HomeMainContent = () => {
                 maxW='container.xl'
                 w='full'
                 minH={`calc(100vh - ${fullHeight})`}
-                position='relative'
+                position='relative' 
             >
                 <Box
                     position='absolute'
@@ -46,7 +48,7 @@ const HomeMainContent = () => {
                 >
                     <Text
                         color='white'
-                        textShadow='md'
+                        textShadow='0 2px 32px #00000099'
                         fontSize='6xl'
                         fontWeight='bold'
                         lineHeight='1'
@@ -57,7 +59,7 @@ const HomeMainContent = () => {
 
                     <Text
                         color='white'
-                        textShadow='md'
+                        textShadow='0 2px 32px #00000099'
                         mb='4'
                         lineHeight='1'
                         letterSpacing='wide'
@@ -67,7 +69,7 @@ const HomeMainContent = () => {
 
                     <HStack
                         color='white'
-                        textShadow='md'
+                        textShadow='0 2px 32px #00000099'
                         spacing='4'
                         mb='4'
                         divider={<StackDivider opacity='.2' />}
@@ -88,7 +90,7 @@ const HomeMainContent = () => {
                     <Text
                         mb='1'
                         color='white'
-                        textShadow='md'
+                        textShadow='0 2px 32px #00000099'
                         fontSize={{ base: 'sm', md: 'md' }}
                         fontWeight='semibold'
                     >

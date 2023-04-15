@@ -11,9 +11,9 @@ const HomeNavbar = () => {
 
     return (
         <>
-            <Box
+            {/* <Box
                 h='16'
-            />
+            /> */}
 
             <Box
                 px='6'
