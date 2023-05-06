@@ -7,6 +7,7 @@ import useIdentityContext from '../../Contexts/IdentityContext';
 import useHistoric from '../../Hooks/useHistoric';
 import HomeNavbar from '../Home/components/HomeNavbar';
 import { CheckIcon, Search2Icon } from '@chakra-ui/icons';
+import { IoGrid, IoList } from 'react-icons/io5'
 
 const GIFT_SHOWN_KEYFRAME = keyframes`
     from {opacity: 0;}
@@ -20,6 +21,7 @@ const GiftList = () => {
     const [displayGifts, setDisplayGifts] = useState<GiftType[]>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const toast = useToast();
+    const [listType, setListType] = useState<'list' | 'grid'>('grid');
 
     useEffect(() => {
         const fetchGifts = async () => {
@@ -65,7 +67,7 @@ const GiftList = () => {
 
     const motionReduced = usePrefersReducedMotion();
     const animation = (index: number) => motionReduced
-        ? undefined 
+        ? undefined
         : `${GIFT_SHOWN_KEYFRAME} ${index}00ms ease-in-out`;
 
     return (
@@ -77,7 +79,7 @@ const GiftList = () => {
             >
                 <HomeNavbar />
 
-                <Box px='6'>
+                <Box px='2'>
                     <Box
                         w='full'
                         maxW='container.xl'
@@ -111,7 +113,16 @@ const GiftList = () => {
                         {
                             !!displayGifts && (
                                 <>
-                                    <Flex justify='end'>
+                                    <Flex justify='end' mb='2'>
+                                        <IconButton
+                                            aria-label='list-type'
+                                            icon={listType === 'grid' ? <IoList /> : <IoGrid />}
+                                            onClick={() => setListType(prev => prev === 'grid' ? 'list' : 'grid')}
+                                            size='lg'
+                                            mr='2'
+                                            colorScheme='gray'
+                                        />
+
                                         <DrawerFilter
                                             availableCategories={gifts.map(x => x.category).filter((el, index, arr) => arr.indexOf(el) == index).map(cat => ({
                                                 name: cat,
@@ -135,79 +146,161 @@ const GiftList = () => {
                                                     >
                                                         {x}
                                                     </Text>
-                                                    <SimpleGrid
-                                                        templateColumns={{ base: '1fr', md: '1fr 1fr 1fr', lg: '1fr 1fr 1fr 1fr' }}
-                                                        gap='4'
-                                                        color='gray.900'
-                                                    >
-                                                        {
-                                                            categoryGifts.map((gift, index) => (
-                                                                <GridItem
-                                                                    key={gift.id}
-                                                                    border='1px solid'
-                                                                    borderColor='gray.900'
-                                                                    rounded='lg'
-                                                                    bg='white'
-                                                                    as={Link}
-                                                                    to={gift.id.toString()}
-                                                                    animation={animation(index)}
-                                                                    pb='4'
-                                                                    position='relative'
-                                                                >
-                                                                    {
-                                                                        gift.obtainedByMe ? (
-                                                                            <Badge
-                                                                                variant='solid'
-                                                                                whiteSpace='break-spaces'
-                                                                                position='absolute'
-                                                                                top='50%'
-                                                                                transform='translateY(-40px)'
-                                                                                textAlign='center'
-                                                                                p='2'
-                                                                                left='6'
-                                                                                right='6'
-                                                                                colorScheme='success'
-                                                                                zIndex='9'
-                                                                            >
-                                                                                Obrigado! Você selecionou este presente.
-                                                                            </Badge>
-                                                                        ) : gift.obtained ? (
-                                                                            <Badge
-                                                                                variant='solid'
-                                                                                whiteSpace='break-spaces'
-                                                                                position='absolute'
-                                                                                top='50%'
-                                                                                transform='translateY(-40px)'
-                                                                                textAlign='center'
-                                                                                p='2'
-                                                                                left='6'
-                                                                                right='6'
-                                                                                colorScheme='red'
-                                                                                zIndex='9'
-                                                                            >
-                                                                                Este presente já foi selecionado por alguém.
-                                                                            </Badge>
-                                                                        ) : null
-                                                                    }
-                                                                    <Box w='full'>
-                                                                        <Box w='full' p='8' mb='4'>
-                                                                            {
-                                                                                !!gift.pictures && <Image filter={gift.obtained ? 'blur(2px) grayscale(1)' : undefined} borderRadius='6px' w='full' h='44' objectFit='contain' src={gift.pictures[0]} />
-                                                                            }
-                                                                        </Box>
-                                                                        <Box px='6' mb='1' h='16'>
-                                                                            <Text noOfLines={2} fontWeight='semibold'>{gift.title}</Text>
-                                                                        </Box>
-                                                                        <Box px='6'>
-                                                                            <Text>
-                                                                                Ver presente
-                                                                            </Text>
-                                                                        </Box>
-                                                                    </Box>
-                                                                </GridItem>
-                                                            ))
-                                                        }
-                                                    </SimpleGrid>
+                                                    {
+                                                        listType === 'grid' ? (
+                                                            <SimpleGrid
+                                                                templateColumns={{ base: '1fr 1fr', lg: '1fr 1fr 1fr 1fr 1fr 1fr' }}
+                                                                gap='2'
+                                                                color='gray.900'
+                                                            >
+                                                                {
+                                                                    categoryGifts.sort((a, b) => a.title > b.title ? 1 : -1).map((gift, index) => (
+                                                                        <GridItem
+                                                                            bg='white'
+                                                                            borderRadius='base'
+                                                                            p='4'
+                                                                            cursor='pointer'
+                                                                            w='full'
+                                                                            as={Link}
+                                                                            to={gift.id.toString()}
+                                                                        >
+                                                                            <Box mb='4'>
+                                                                                {
+                                                                                    !!gift.pictures &&
+                                                                                    <Image
+                                                                                        src={gift.pictures[0]}
+                                                                                        objectFit='contain'
+                                                                                        w='full'
+                                                                                        h='32'
+                                                                                        filter={gift.obtained ? 'blur(2px) grayscale(1)' : undefined}
+                                                                                    />
+                                                                                }
+                                                                            </Box>
+
+                                                                            <Box minH='12' w='full'>
+                                                                                {
+                                                                                    gift.obtainedByMe ?
+                                                                                        <Text
+                                                                                            color='green'
+                                                                                            fontSize='xs'
+                                                                                            lineHeight='1'
+                                                                                            fontWeight='semibold'
+                                                                                            mb='2'
+                                                                                            textAlign='center'
+                                                                                        >
+                                                                                            Você selecionou este presente
+                                                                                        </Text>
+                                                                                        : gift.obtained ?
+                                                                                            <Text
+                                                                                                color='red'
+                                                                                                fontSize='xs'
+                                                                                                lineHeight='1'
+                                                                                                fontWeight='semibold'
+                                                                                                mb='2'
+                                                                                                textAlign='center'
+                                                                                            >
+                                                                                                Este presente já foi selecionado
+                                                                                            </Text>
+                                                                                            : null
+                                                                                }
+                                                                                <Text
+                                                                                    noOfLines={2}
+                                                                                    fontSize='sm'
+                                                                                    fontWeight='semibold'
+                                                                                    lineHeight='1.1'
+                                                                                >
+                                                                                    {gift.title}
+                                                                                </Text>
+                                                                            </Box>
+
+                                                                            <Box>
+                                                                                <Text fontSize='xs'>Visualizar presente</Text>
+                                                                            </Box>
+                                                                        </GridItem>
+                                                                    ))
+                                                                }
+                                                            </SimpleGrid>
+                                                        ) : (
+                                                            <VStack>
+                                                                {
+                                                                    categoryGifts.sort((a, b) => a.title > b.title ? 1 : -1).map((gift, index) => (
+                                                                        <StackItem
+                                                                            w='full'
+                                                                            as={Link}
+                                                                            to={gift.id.toString()}
+                                                                        >
+                                                                            <Flex>
+                                                                                <Box
+                                                                                    bg='white'
+                                                                                    p='2'
+                                                                                    borderRadius='base'
+                                                                                    w='max-content'
+                                                                                >
+                                                                                    {
+                                                                                        !!gift.pictures &&
+                                                                                        <Image
+                                                                                            src={gift.pictures[0]}
+                                                                                            objectFit='cover'
+                                                                                            w='20'
+                                                                                            h='20'
+                                                                                            filter={gift.obtained ? 'blur(2px) grayscale(1)' : undefined}
+                                                                                        />
+                                                                                    }
+                                                                                </Box>
+
+                                                                                <Flex
+                                                                                    flexDirection='column'
+                                                                                    justifyContent='space-evenly'
+                                                                                    flex='1'
+                                                                                    ml='4'
+                                                                                    py='2'
+                                                                                >
+                                                                                    {
+                                                                                        gift.obtainedByMe ?
+                                                                                            <Text
+                                                                                                color='green'
+                                                                                                fontSize='xs'
+                                                                                                lineHeight='1'
+                                                                                                fontWeight='semibold'
+                                                                                            >
+                                                                                                Você selecionou este presente
+                                                                                            </Text>
+                                                                                            : gift.obtained ?
+                                                                                                <Text
+                                                                                                    color='red'
+                                                                                                    fontSize='xs'
+                                                                                                    lineHeight='1'
+                                                                                                    fontWeight='semibold'
+                                                                                                >
+                                                                                                    Este presente já foi selecionado
+                                                                                                </Text>
+                                                                                                : null
+                                                                                    }
+
+                                                                                    <Text
+                                                                                        color='white'
+                                                                                        lineHeight='1.2'
+                                                                                        fontWeight='semibold'
+                                                                                    >
+                                                                                        {
+                                                                                            gift.title
+                                                                                        }
+                                                                                    </Text>
+
+                                                                                    <Text
+                                                                                        color='white'
+                                                                                        fontSize='xs'
+                                                                                    >
+                                                                                        Visualizar presente
+                                                                                    </Text>
+                                                                                </Flex>
+                                                                            </Flex>
+                                                                        </StackItem>
+                                                                    ))
+                                                                }
+                                                            </VStack>
+                                                        )
+                                                    }
                                                 </Box>
                                             )
                                         })
