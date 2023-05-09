@@ -5,6 +5,7 @@ import { IdentityContextProvider } from './Contexts/IdentityContext';
 import Router from './Router';
 import { theme } from './Theme';
 import CookieConcent from './Components/CookieConcent';
+import { GiftContextProvider } from './Contexts/GiftContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,11 +14,12 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <IdentityContextProvider>
-      <ChakraProvider theme={theme}>
-        <Router />
-
-        <CookieConcent />
-      </ChakraProvider>
+      <GiftContextProvider>
+        <ChakraProvider theme={theme}>
+          <Router />
+          <CookieConcent />
+        </ChakraProvider>
+      </GiftContextProvider>
     </IdentityContextProvider>
   </React.StrictMode>
 );

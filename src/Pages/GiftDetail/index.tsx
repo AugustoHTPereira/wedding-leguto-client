@@ -72,7 +72,7 @@ const GiftDetail = () => {
             >
                 <HomeNavbar />
 
-                <Box px='6' pt='4'  w='full' maxW='container.sm' mx='auto'>
+                <Box px='6' pt='24'  w='full' maxW='container.sm' mx='auto'>
                     <IconButton mb='4' variant='outline' color='white' icon={<ChevronLeftIcon fontSize='2xl' />} aria-label="back" onClick={back} />
 
                     {isFetching ? <Skeleton w='10' h='4' /> : <Text color='gray.200' fontSize='xs'>#{id} - {gift.title}</Text>}

@@ -8,67 +8,17 @@ import useHistoric from '../../Hooks/useHistoric';
 import HomeNavbar from '../Home/components/HomeNavbar';
 import { CheckIcon, Search2Icon } from '@chakra-ui/icons';
 import { IoGrid, IoList } from 'react-icons/io5'
-
-const GIFT_SHOWN_KEYFRAME = keyframes`
-    from {opacity: 0;}
-    to {opacity: 1;}
-`
+import useGifts from '../../Hooks/useGifts';
 
 const GiftList = () => {
     const { giftListAccess } = useHistoric();
     const { isSignedIn, id } = useIdentityContext();
-    const [gifts, setGifts] = useState<GiftType[]>([]);
-    const [displayGifts, setDisplayGifts] = useState<GiftType[]>();
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-    const toast = useToast();
     const [listType, setListType] = useState<'list' | 'grid'>('grid');
-
-    useEffect(() => {
-        const fetchGifts = async () => {
-            setIsLoading(true);
-            try {
-                const response = await api.get("/gift");
-                setGifts(response.data)
-            }
-            catch (err: any) {
-                toast({
-                    status: 'error',
-                    title: 'Falha!',
-                    description: 'Não foi possível carregar a lista de presentes. Por favor, tente novamente mais tarde.',
-                    duration: 1000 * 5,
-                    isClosable: true,
-                })
-            }
-            finally {
-                setIsLoading(false);
-            }
-
-        }
-
-        fetchGifts();
-    }, [])
+    const { applyFilter, gifts, isLoading, categories } = useGifts();
 
     useEffect(() => {
         giftListAccess({ aditionalData: { isSignedIn, guestId: id } });
     }, [isSignedIn, id])
-
-    const onFilterChanged = ({ selectedCategories }: { selectedCategories: string[] }) => {
-        if (selectedCategories.length > 0) {
-            console.log(gifts.filter(x => selectedCategories.indexOf(x.category) !== -1))
-            setDisplayGifts(gifts.filter(x => selectedCategories.indexOf(x.category) !== -1))
-        } else {
-            setDisplayGifts(gifts)
-        }
-    }
-
-    useEffect(() => {
-        setDisplayGifts(gifts)
-    }, [gifts])
-
-    const motionReduced = usePrefersReducedMotion();
-    const animation = (index: number) => motionReduced
-        ? undefined
-        : `${GIFT_SHOWN_KEYFRAME} ${index}00ms ease-in-out`;
 
     return (
         <>
@@ -111,7 +61,7 @@ const GiftList = () => {
                         }
 
                         {
-                            !!displayGifts && (
+                            !!gifts?.length && (
                                 <>
                                     <Flex justify='end' mb='2'>
                                         <IconButton
@@ -124,20 +74,17 @@ const GiftList = () => {
                                         />
 
                                         <DrawerFilter
-                                            availableCategories={gifts.map(x => x.category).filter((el, index, arr) => arr.indexOf(el) == index).map(cat => ({
-                                                name: cat,
-                                                gifts: gifts.filter(x => x.category === cat).length
-                                            }))}
-                                            onChange={onFilterChanged}
+                                            availableCategories={categories}
+                                            onChange={({ selectedCategories }) => applyFilter({ categories: selectedCategories })}
                                         />
                                     </Flex>
 
                                     {
-                                        displayGifts.map(x => x.category).filter((el, index, arr) => arr.indexOf(el) == index).map(x => {
-                                            const categoryGifts = displayGifts.filter(y => y.category === x);
+                                        gifts.map(x => x.category).filter((el, index, arr) => arr.indexOf(el) == index).map(x => {
+                                            const categoryGifts = gifts.filter(y => y.category === x);
 
                                             return (
-                                                <Box mb='24'>
+                                                <Box key={x} mb='24'>
                                                     <Text
                                                         mb='4'
                                                         color='white'
@@ -156,6 +103,7 @@ const GiftList = () => {
                                                                 {
                                                                     categoryGifts.sort((a, b) => a.title > b.title ? 1 : -1).map((gift, index) => (
                                                                         <GridItem
+                                                                            key={`grid-${index}`}
                                                                             bg='white'
                                                                             borderRadius='base'
                                                                             p='4'
@@ -225,6 +173,7 @@ const GiftList = () => {
                                                                 {
                                                                     categoryGifts.sort((a, b) => a.title > b.title ? 1 : -1).map((gift, index) => (
                                                                         <StackItem
+                                                                            key={`list-${index}`}
                                                                             w='full'
                                                                             as={Link}
                                                                             to={gift.id.toString()}
@@ -318,28 +267,24 @@ const GiftList = () => {
 export default GiftList;
 
 interface DrawerFilterProps {
-    availableCategories?: { name: string, gifts: number }[],
+    availableCategories?: string[],
     onChange?: ({ }: { selectedCategories: string[], }) => void,
 }
 
 const DrawerFilter = ({ availableCategories, onChange }: DrawerFilterProps) => {
     const { onOpen, ...rest } = useDisclosure();
-    const [selectedCategories, setSelectedCategories] = useState<string[]>(availableCategories?.map(x => x.name) || []);
+    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
     const onToggleCategory = (categoryName: string) => {
         if (selectedCategories.indexOf(categoryName) === -1) {
-            console.log(`add category ${categoryName}`)
             setSelectedCategories(prev => !!prev ? ([...prev, categoryName]) : ([categoryName]));
         } else {
-            console.log(`remove category ${categoryName}`)
             setSelectedCategories(prev => !!prev ? prev.filter(x => x !== categoryName) : ([]));
         }
     }
 
     useEffect(() => {
-        !!onChange && onChange({
-            selectedCategories
-        })
+        !!onChange && onChange({ selectedCategories })
     }, [selectedCategories])
 
     return (
@@ -367,16 +312,16 @@ const DrawerFilter = ({ availableCategories, onChange }: DrawerFilterProps) => {
                                     !!availableCategories && (
                                         availableCategories.map(cat => (
                                             <StackItem
-                                                key={cat.name}
+                                                key={cat}
                                                 w='full'
-                                                onClick={e => onToggleCategory(cat.name)}
+                                                onClick={() => onToggleCategory(cat)}
                                                 cursor='pointer'
                                             >
                                                 <Flex align='center' justify='space-between'>
-                                                    <Text textTransform='capitalize'>{cat.name.toLowerCase()}</Text>
+                                                    <Text textTransform='capitalize'>{cat.toLowerCase()}</Text>
 
                                                     {
-                                                        selectedCategories.indexOf(cat.name) !== -1 && (
+                                                        selectedCategories.indexOf(cat) !== -1 && (
                                                             <Box>
                                                                 <CheckIcon />
                                                             </Box>
@@ -390,7 +335,6 @@ const DrawerFilter = ({ availableCategories, onChange }: DrawerFilterProps) => {
                             </VStack>
                         </Box>
                     </DrawerBody>
-                    <DrawerFooter></DrawerFooter>
                 </DrawerContent>
             </Drawer>
         </>
