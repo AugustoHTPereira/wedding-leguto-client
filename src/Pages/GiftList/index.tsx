@@ -14,7 +14,7 @@ const GiftList = () => {
     const { giftListAccess } = useHistoric();
     const { isSignedIn, id } = useIdentityContext();
     const [listType, setListType] = useState<'list' | 'grid'>('grid');
-    const { applyFilter, gifts, isLoading, categories } = useGifts();
+    const { applyFilter, gifts, isLoading, categories, filters } = useGifts();
 
     useEffect(() => {
         giftListAccess({ aditionalData: { isSignedIn, guestId: id } });
@@ -74,8 +74,9 @@ const GiftList = () => {
                                         />
 
                                         <DrawerFilter
-                                            availableCategories={categories}
+                                            categories={categories}
                                             onChange={({ selectedCategories }) => applyFilter({ categories: selectedCategories })}
+                                            selected={filters?.categories}
                                         />
                                     </Flex>
 
@@ -267,13 +268,14 @@ const GiftList = () => {
 export default GiftList;
 
 interface DrawerFilterProps {
-    availableCategories?: string[],
+    categories?: string[],
+    selected?: string[],
     onChange?: ({ }: { selectedCategories: string[], }) => void,
 }
 
-const DrawerFilter = ({ availableCategories, onChange }: DrawerFilterProps) => {
+const DrawerFilter = ({ categories, onChange, selected }: DrawerFilterProps) => {
     const { onOpen, ...rest } = useDisclosure();
-    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+    const [selectedCategories, setSelectedCategories] = useState<string[]>(selected || []);
 
     const onToggleCategory = (categoryName: string) => {
         if (selectedCategories.indexOf(categoryName) === -1) {
@@ -309,8 +311,8 @@ const DrawerFilter = ({ availableCategories, onChange }: DrawerFilterProps) => {
                             <Text mb='2' fontWeight='semibold' fontSize='lg'>Categorias</Text>
                             <VStack spacing='2' divider={<StackDivider borderColor='gray.800' />}>
                                 {
-                                    !!availableCategories && (
-                                        availableCategories.map(cat => (
+                                    !!categories && (
+                                        categories.map(cat => (
                                             <StackItem
                                                 key={cat}
                                                 w='full'
