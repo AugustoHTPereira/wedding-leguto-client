@@ -1,103 +1,64 @@
 import React from 'react';
-import { useToken, HStack, StackDivider, StackItem, Box, Text } from "@chakra-ui/react";
+import { useToken, HStack, StackDivider, StackItem, Box, Text, Heading, Flex } from "@chakra-ui/react";
 import useWeddingDate from "../../../../Hooks/useWeddingDate";
-import BackgroundPhoto from "../../../../Assets/img/IMG_7635.jpg"
+import BackgroundPhoto from "../../../../Assets/img/wedding.avif"
 import BackgroundPhoto_SM from "../../../../Assets/img/IMG_7025.jpg"
 
 const HomeMainContent = () => {
     const fullHeight = useToken('sizes', '16')
-    const { diff: { d: days } } = useWeddingDate();
+    const { date } = useWeddingDate();
 
     return (
         <Box
             pt='16'
             px='6'
-            bgImage={{ base: BackgroundPhoto_SM, lg: BackgroundPhoto }}
-            bgPosition={{
-                base: '',
-                lg: 'center 10%'
-            }}
-            bgSize={{
-                base: 'cover',
-                lg: ''
-            }}
+            bgImage={BackgroundPhoto}
+            bgPosition='center'
             bgRepeat='no-repeat'
             position='relative'
         >
             <Box 
-                display={{ base: 'block', lg: 'none' }}
-                position='absolute' 
-                bottom='0'
-                left='0'
+                bg='blackAlpha.400'
+                pos='absolute'
+                top='0'
                 right='0'
-                bg='linear-gradient(0deg, rgba(0,0,0,0.8) 10%, rgba(0,0,0,0) 100%)'
-                height='50vh'
+                bottom='0'          
+                left='0'
+                w='full'
+                h='100vh'
+                backdropFilter='blur(4px) contrast(60%)'
             />
 
-            <Box
+            <Flex
+                justifyContent='center'
+                alignItems='center'
+                flexDir='column'
                 mx='auto'
                 maxW='container.xl'
                 w='full'
                 minH={`calc(100vh - ${fullHeight})`}
-                position='relative' 
+                position='relative'
             >
-                <Box
-                    position='absolute'
-                    bottom='0'
-                    pb='24'
+                <Heading 
+                    transitionDuration='120ms'
+                    color='white'
+                    fontSize="7xl"
+                    textAlign='center'
+                    lineHeight='1'
+                    textShadow='0 2px 4px rgba(0, 0, 0, 0.2)'
                 >
-                    <Text
-                        color='white'
-                        textShadow='0 2px 32px #00000099'
-                        fontSize='6xl'
-                        fontWeight='bold'
-                        lineHeight='1'
-                        letterSpacing='wider'
-                    >
-                        LEGUTO
-                    </Text>
+                    Camila e Guilherme
+                </Heading>
 
-                    <Text
-                        color='white'
-                        textShadow='0 2px 32px #00000099'
-                        mb='4'
-                        lineHeight='1'
-                        letterSpacing='wide'
-                    >
-                        LEILANNE E AUGUSTO
-                    </Text>
-
-                    <HStack
-                        color='white'
-                        textShadow='0 2px 32px #00000099'
-                        spacing='4'
-                        mb='4'
-                        divider={<StackDivider opacity='.2' />}
-                        fontSize={{ base: 'sm', md: 'md' }}
-                        flexDir={{ base: 'column', md: 'row' }}
-                    >
-                        <StackItem w={{ base: 'full', md: 'unset' }}>
-                            <Text>16.06.2023</Text>
-                        </StackItem>
-                        <StackItem w={{ base: 'full', md: 'unset' }}>
-                            <Text>20:30h</Text>
-                        </StackItem>
-                        <StackItem w={{ base: 'full', md: 'unset' }}>
-                            <Text>Campanha, MG</Text>
-                        </StackItem>
-                    </HStack>
-                    
-                    <Text
-                        mb='1'
-                        color='white'
-                        textShadow='0 2px 32px #00000099'
-                        fontSize={{ base: 'sm', md: 'md' }}
-                        fontWeight='semibold'
-                    >
-                        Restam {days} dias para a cerimônia.
-                    </Text>
-                </Box>
-            </Box>
+                <Text
+                    textAlign='center'
+                    fontSize='2xl'
+                    color='white'
+                    mt='4'
+                >
+                    {date.getDate()}-{date.getMonth().toString().padStart(2, '0')}-{date.getFullYear()}
+                </Text>
+            </Flex>
         </Box>
     )
 }

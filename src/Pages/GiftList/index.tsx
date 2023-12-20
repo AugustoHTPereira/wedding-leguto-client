@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Flex, Image, Text, Spinner, useToast, SimpleGrid, GridItem, HStack, StackItem, IconButton, Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter, useDisclosure, DrawerCloseButton, VStack, StackDivider, Icon, keyframes, usePrefersReducedMotion, Badge } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import { GiftType } from '../../Contracts/Gifts';
-import api from '../../Services/API';
 import useIdentityContext from '../../Contexts/IdentityContext';
 import useHistoric from '../../Hooks/useHistoric';
 import HomeNavbar from '../Home/components/HomeNavbar';
@@ -25,31 +23,31 @@ const GiftList = () => {
             <Box
                 w='full'
                 minH='100vh'
-                bg='black'
             >
                 <HomeNavbar />
+
+                <Box
+                    mb='12' bg='#b09c90'
+                    pt='20'
+                    pb='16'
+                >
+                    <Text
+                        textAlign='center'
+                        color='white'
+                        fontSize='4xl'
+                        fontWeight='bold'
+                        mb='6'
+                    >
+                        Lista de presentes
+                    </Text>
+                </Box>
 
                 <Box px='2'>
                     <Box
                         w='full'
                         maxW='container.xl'
                         mx='auto'
-                        pt='20'
-                        pb='16'
                     >
-                        <Box
-                            mb='12'
-                        >
-                            <Text
-                                textAlign='center'
-                                color='white'
-                                fontSize='4xl'
-                                fontWeight='bold'
-                                mb='6'
-                            >
-                                Lista de presentes
-                            </Text>
-                        </Box>
 
                         {
                             !!isLoading && (
@@ -105,7 +103,8 @@ const GiftList = () => {
                                                                     categoryGifts.sort((a, b) => a.title > b.title ? 1 : -1).map((gift, index) => (
                                                                         <GridItem
                                                                             key={`grid-${index}`}
-                                                                            bg='white'
+                                                                            borderColor='#f4ece7'
+                                                                            borderWidth='1px'
                                                                             borderRadius='base'
                                                                             p='4'
                                                                             cursor='pointer'
@@ -131,22 +130,18 @@ const GiftList = () => {
                                                                                     gift.obtainedByMe ?
                                                                                         <Text
                                                                                             color='green'
-                                                                                            fontSize='xs'
                                                                                             lineHeight='1'
                                                                                             fontWeight='semibold'
                                                                                             mb='2'
-                                                                                            textAlign='center'
                                                                                         >
                                                                                             Você selecionou este presente
                                                                                         </Text>
                                                                                         : gift.obtained ?
                                                                                             <Text
                                                                                                 color='red'
-                                                                                                fontSize='xs'
                                                                                                 lineHeight='1'
                                                                                                 fontWeight='semibold'
                                                                                                 mb='2'
-                                                                                                textAlign='center'
                                                                                             >
                                                                                                 Este presente já foi selecionado
                                                                                             </Text>
@@ -154,8 +149,7 @@ const GiftList = () => {
                                                                                 }
                                                                                 <Text
                                                                                     noOfLines={2}
-                                                                                    fontSize='sm'
-                                                                                    fontWeight='semibold'
+                                                                                    fontSize='lg'
                                                                                     lineHeight='1.1'
                                                                                 >
                                                                                     {gift.title}
@@ -163,14 +157,14 @@ const GiftList = () => {
                                                                             </Box>
 
                                                                             <Box>
-                                                                                <Text fontSize='xs'>Visualizar presente</Text>
+                                                                                <Text fontSize='md'>Visualizar presente</Text>
                                                                             </Box>
                                                                         </GridItem>
                                                                     ))
                                                                 }
                                                             </SimpleGrid>
                                                         ) : (
-                                                            <VStack>
+                                                            <VStack divider={<StackDivider />}>
                                                                 {
                                                                     categoryGifts.sort((a, b) => a.title > b.title ? 1 : -1).map((gift, index) => (
                                                                         <StackItem
@@ -209,7 +203,6 @@ const GiftList = () => {
                                                                                         gift.obtainedByMe ?
                                                                                             <Text
                                                                                                 color='green'
-                                                                                                fontSize='xs'
                                                                                                 lineHeight='1'
                                                                                                 fontWeight='semibold'
                                                                                             >
@@ -218,7 +211,6 @@ const GiftList = () => {
                                                                                             : gift.obtained ?
                                                                                                 <Text
                                                                                                     color='red'
-                                                                                                    fontSize='xs'
                                                                                                     lineHeight='1'
                                                                                                     fontWeight='semibold'
                                                                                                 >
@@ -228,9 +220,8 @@ const GiftList = () => {
                                                                                     }
 
                                                                                     <Text
-                                                                                        color='white'
                                                                                         lineHeight='1.2'
-                                                                                        fontWeight='semibold'
+                                                                                        fontSize='xl'
                                                                                     >
                                                                                         {
                                                                                             gift.title
@@ -238,8 +229,7 @@ const GiftList = () => {
                                                                                     </Text>
 
                                                                                     <Text
-                                                                                        color='white'
-                                                                                        fontSize='xs'
+                                                                                        fontSize='lg'
                                                                                     >
                                                                                         Visualizar presente
                                                                                     </Text>
@@ -294,22 +284,26 @@ const DrawerFilter = ({ categories, onChange, selected }: DrawerFilterProps) => 
             <IconButton
                 aria-label='Aplicar filtro'
                 size='lg'
-                colorScheme='teal'
+                color='white'
+                _hover={{
+                    bg: '#b09c90'
+                }}
+                bg='#b09c90'
                 icon={<Search2Icon />}
                 onClick={onOpen}
             />
 
             <Drawer {...rest} size='md'>
                 <DrawerOverlay />
-                <DrawerContent bg='black' color='white'>
+                <DrawerContent>
                     <DrawerCloseButton />
                     <DrawerHeader>
                         Aplicar filtro
                     </DrawerHeader>
                     <DrawerBody>
                         <Box mb='8'>
-                            <Text mb='2' fontWeight='semibold' fontSize='lg'>Categorias</Text>
-                            <VStack spacing='2' divider={<StackDivider borderColor='gray.800' />}>
+                            <Text mb='2' fontWeight='semibold' fontSize='2xl'>Categorias</Text>
+                            <VStack spacing='2' divider={<StackDivider borderColor='gray.200' />}>
                                 {
                                     !!categories && (
                                         categories.map(cat => (
@@ -320,7 +314,7 @@ const DrawerFilter = ({ categories, onChange, selected }: DrawerFilterProps) => 
                                                 cursor='pointer'
                                             >
                                                 <Flex align='center' justify='space-between'>
-                                                    <Text textTransform='capitalize'>{cat.toLowerCase()}</Text>
+                                                    <Text fontSize='2xl' textTransform='capitalize'>{cat.toLowerCase()}</Text>
 
                                                     {
                                                         selectedCategories.indexOf(cat) !== -1 && (

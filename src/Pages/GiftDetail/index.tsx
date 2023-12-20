@@ -29,7 +29,10 @@ const GiftDetail = () => {
                 const response = await api.get("/gift/" + id);
 
                 giftDetailAccess({ giftId: parseInt(id), aditionalData: { isSignedIn, guestId, giftId: id } });
-                setGift(response.data);
+                setGift({
+                    ...response.data,
+                    obtainedByMe: response.data.guestsId?.indexOf(guestId) > -1
+                });
             }
         } catch (error) {
             
@@ -67,15 +70,14 @@ const GiftDetail = () => {
             <Box
                 w='full'
                 minH='100vh'
-                bg='black'
                 pb='20'
             >
-                <HomeNavbar />
+                <HomeNavbar theme='light' />
 
                 <Box px='6' pt='24'  w='full' maxW='container.sm' mx='auto'>
-                    <IconButton mb='4' variant='outline' color='white' icon={<ChevronLeftIcon fontSize='2xl' />} aria-label="back" onClick={back} />
+                    <IconButton mb='4' variant='outline' icon={<ChevronLeftIcon fontSize='2xl' />} aria-label="back" onClick={back} />
 
-                    {isFetching ? <Skeleton w='10' h='4' /> : <Text color='gray.200' fontSize='xs'>#{id} - {gift.title}</Text>}
+                    {isFetching ? <Skeleton w='10' h='4' /> : <Text fontSize='sm'>#{id} - {gift.title}</Text>}
                 
                     {!isFetching && !gift && (
                         <Flex w='full' alignItems='center' justify='center' textAlign='center'>
@@ -92,10 +94,10 @@ const GiftDetail = () => {
                         )
                     }
 
-                    {isFetching ? <Skeleton w='72' h='8' mt='4' /> : <Text mt='4' color='white' fontSize='4xl' lineHeight='1' fontWeight='semibold'>{gift?.title}</Text>}
+                    {isFetching ? <Skeleton w='72' h='8' mt='4' /> : <Text mt='4' fontSize='4xl' lineHeight='1' fontWeight='semibold'>{gift?.title}</Text>}
 
                     {!!gift?.obtained && !isFetching && !iTake && (
-                        <Alert status='warning' mt='6'>
+                        <Alert fontSize='xl' status='warning' mt='6'>
                             <AlertIcon />
                             <AlertDescription>
                                 Hmmmm.. Parece que alguém já vai dar esse presente.
@@ -104,12 +106,12 @@ const GiftDetail = () => {
                     )}
 
                     {!!gift?.obtained && !isFetching && !!iTake && (
-                        <Alert status='success' mt='6'>
+                        <Alert fontSize='xl' status='success' mt='6'>
                             <AlertIcon />
                             <AlertDescription>
                                 <Box>
                                     <Text>Você selecionou esse presente.</Text>
-                                    <Button onClick={unTake} size='sm' mt='2' colorScheme='red'>Vou trocar de presente</Button>
+                                    <Button onClick={unTake} size='sm' fontSize='lg' mt='2' colorScheme='red'>Vou trocar de presente</Button>
                                 </Box>
                             </AlertDescription>
                         </Alert>
@@ -126,7 +128,7 @@ const GiftDetail = () => {
                                 <Skeleton w='56' h='6' mb='1' />
                             </Box>
                         ) : !!gift?.metadata && (
-                            <VStack divider={<StackDivider />} mt='8' color='gray.500' spacing='1' fontSize='md'>
+                            <VStack divider={<StackDivider />} mt='8' color='gray.700' spacing='1' fontSize='xl'>
                                 <StackItem w='full'>
                                     <Text>{gift.category}</Text>
                                 </StackItem>
@@ -141,19 +143,19 @@ const GiftDetail = () => {
                         )
                     }
 
-                    {isFetching ? <Skeleton w='full' h='12' mt='6' /> : !!gift && <TakeModal beforeTake={onTake} isSignedIn={isSignedIn} isSigning={isSigning} signin={signin} gift={gift} />}
-                    {isFetching ? <Skeleton w='full' h='12' mt='2' /> : <ButtonRedirect gift={gift} />}
+                    {isFetching ? <Skeleton w='full' h='12' mt='6' /> : !!gift && !gift.obtained && <TakeModal beforeTake={onTake} isSignedIn={isSignedIn} isSigning={isSigning} signin={signin} gift={gift} />}
+                    {isFetching ? <Skeleton w='full' h='12' mt='2' /> : !!gift && (!gift.obtained || !!gift.obtainedByMe) && <ButtonRedirect gift={gift} />}
 
-                    <Box mt='4' color='white' textAlign='center'>
+                    <Box mt='4' textAlign='center'>
                         <Text>Querido convidado, não se limite a nossa lista.<br/>Fique a vontade para comprar o presente onde quiser.</Text>
                     </Box>
 
                     <Box mt='10'>
                         {isFetching ? <><SkeletonText maxW='400px' /><SkeletonText mt='4' maxW='600px' /><SkeletonText mt='4' maxW='200px' /></> : (
                             <Box>
-                                <Text color='white' fontWeight='semibold' fontSize='sm'>Endereço para entregas</Text>
+                                <Text fontWeight='semibold' fontSize='sm'>Endereço para entregas</Text>
 
-                                <VStack spacing='1' fontSize='md' mt='4' divider={<StackDivider />} color='white'>
+                                <VStack spacing='1' fontSize='xl' mt='4' divider={<StackDivider />}>
                                     <StackItem w='full'>
                                         Rua: Antônio Andrade Mendes
                                     </StackItem>

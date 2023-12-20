@@ -1,8 +1,7 @@
 import axios from "axios";
-import { parseCookies } from "nookies";
 
 const api = axios.create({
-    baseURL: "https://leguto.somee.com/api"
+    baseURL: "https://localhost:7193/api"
 })
 
 const token = localStorage.getItem("leguto.identity.access_token");

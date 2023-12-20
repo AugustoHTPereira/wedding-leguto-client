@@ -4,9 +4,25 @@ interface WeddingDate {
     date: Date,
     diff: Diff,
     dateStr: string,
+    str: string,
 }
 
-const DATE = new Date(2023, 5, 16, 20, 30);
+const MONTHS = [
+    'Janeiro',
+    'Fevereiro',
+    'Março',
+    'Abril',
+    'Maio',
+    'Junho',
+    'Julho',
+    'Agosto',
+    'Setembro',
+    'Outubro',
+    'Novembro',
+    'Dezembro',
+]
+
+const DATE = new Date(2024, 9, 27, 20);
 
 const useWeddingDate = (): WeddingDate => {
     const [diff, setDiff] = useState<Diff>({} as Diff)
@@ -15,7 +31,7 @@ const useWeddingDate = (): WeddingDate => {
         setDiff(dateDiff(new Date().toString(), DATE.toString()));
         const interval = setInterval(() => {
             setDiff(dateDiff(new Date().toString(), DATE.toString()));
-        }, 1000 * 60)
+        }, 1000)
 
         return () => clearInterval(interval)
     }, [])
@@ -23,7 +39,8 @@ const useWeddingDate = (): WeddingDate => {
     return {
         date: DATE,
         diff,
-        dateStr: `${DATE.getDate().toString().padStart(2, '0')}.${(DATE.getMonth() + 1).toString().padStart(2, '0')}.${DATE.getFullYear().toString().substring(2)} - ${DATE.getHours()}H`
+        dateStr: `${DATE.getDate().toString().padStart(2, '0')}.${(DATE.getMonth()).toString().padStart(2, '0')}.${DATE.getFullYear().toString().substring(2)} - ${DATE.getHours()}H`,
+        str: `${DATE.getDate().toString().padStart(2, '0')} de ${MONTHS[DATE.getMonth() - 1].toLowerCase()} de ${DATE.getFullYear()}`
     };
 }
 
