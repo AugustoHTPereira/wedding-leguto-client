@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "https://localhost:7193/api"
+    baseURL: "https://cagui.somee.com/api"
 })
 
 const token = localStorage.getItem("leguto.identity.access_token");
