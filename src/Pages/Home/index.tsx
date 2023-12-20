@@ -13,9 +13,9 @@ const Home = () => {
     
     return (
         <Box bg='white' minH='100vh'>
-            {/* <HomeNavbar />
+            <HomeNavbar />
             <HomeMainContent />
-            <HomeWelcomeSection /> */}
+            <HomeWelcomeSection />
         </Box>
     )
 }
