@@ -4,7 +4,11 @@ import { useDisclosure, Text, IconButton, Drawer, DrawerOverlay, DrawerContent, 
 import { Link } from "react-router-dom";
 import useIdentityContext from '../../../../Contexts/IdentityContext';
 
-const HomeDrawer = () => {
+type HomeDrawerProps = {
+    theme?: 'light' | 'dark',
+}
+
+const HomeDrawer = ({ theme }: HomeDrawerProps) => {
     const { onOpen, ...rest } = useDisclosure();
     const { isSignedIn, type, signout } = useIdentityContext();
 
@@ -13,7 +17,7 @@ const HomeDrawer = () => {
             <IconButton
                 aria-label="Menu hamburguer"
                 icon={<HamburgerIcon fontSize='2xl' />}
-                colorScheme='blackAlpha'
+                textColor={theme === 'light' ? 'black' : 'white'}
                 display={{ base: 'initial', md: 'none' }}
                 backgroundColor='transparent'
                 onClick={onOpen}
@@ -21,12 +25,11 @@ const HomeDrawer = () => {
 
             <Drawer {...rest} size='xl'>
                 <DrawerOverlay />
-                <DrawerContent bg='black'>
-                    <DrawerCloseButton color='gray.100' fontSize='xl' top='6' />
+                <DrawerContent>
+                    <DrawerCloseButton fontSize='xl' top='6' />
 
                     <DrawerHeader pt='16' pb='8'>
                         <Text
-                            color='gray.100'
                             fontSize='3xl'
                             maxW='sm'
                             lineHeight='8'
@@ -43,7 +46,6 @@ const HomeDrawer = () => {
                                         <Text
                                             as={Link}
                                             to='/manual'
-                                            color='gray.100'
                                             fontSize='xl'
                                         >
                                             Manual dos padrinhos
@@ -56,7 +58,6 @@ const HomeDrawer = () => {
                                 <Text
                                     as={Link}
                                     to='/history'
-                                    color='gray.100'
                                     fontSize='xl'
                                 >
                                     Nossa história
@@ -67,21 +68,9 @@ const HomeDrawer = () => {
                                 <Text
                                     as={Link}
                                     to='/gifts'
-                                    color='gray.100'
                                     fontSize='xl'
                                 >
                                     Lista de presentes
-                                </Text>
-                            </StackItem>
-
-                            <StackItem w='full'>
-                                <Text
-                                    as={Link}
-                                    to='/help'
-                                    color='gray.100'
-                                    fontSize='xl'
-                                >
-                                    Ajuda
                                 </Text>
                             </StackItem>
 

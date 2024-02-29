@@ -48,14 +48,14 @@ const HomeNavbar = ({ theme }: HomeNavbarProps) => {
                             CeG
                         </Heading>
 
-                        <HStack ml='auto' fontSize='xl' color={color}>
+                        <HStack ml='auto' fontSize='xl' color={color} display={{ base: 'none', md: 'flex' }}>
                             <StackItem>
                                 <Link to='/gifts'>Lista de presentes</Link>
                             </StackItem>
                         </HStack>
                     </Flex>
 
-                    <HomeDrawer />
+                    <HomeDrawer theme={theme} />
                 </Flex>
             </Box>
         </>

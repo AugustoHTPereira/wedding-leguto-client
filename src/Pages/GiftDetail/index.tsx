@@ -157,13 +157,13 @@ const GiftDetail = () => {
 
                                 <VStack spacing='1' fontSize='xl' mt='4' divider={<StackDivider />}>
                                     <StackItem w='full'>
-                                        Rua: Antônio Andrade Mendes
+                                        Avenida Adamo Caovila
                                     </StackItem>
                                     <StackItem w='full'>
-                                        Bairro: Jardim Primavera
+                                        Bairro: Centro
                                     </StackItem>
                                     <StackItem w='full'>
-                                        Nº 117
+                                        Nº 638
                                     </StackItem>
                                     <StackItem w='full'>
                                         Monsenhor Paulo - MG
@@ -172,10 +172,10 @@ const GiftDetail = () => {
                                         CEP: 37405-000
                                     </StackItem>
                                     <StackItem w='full'>
-                                        Referência: Casa do Sionel - Ao lado da Serralheria D'Stak
+                                        Referência: Rua do cemitério
                                     </StackItem>
 
-                                    <StackItem fontSize='xs' textAlign='center'>37405-000, Monsenhor Paulo - MG, Rua Antônio Andrade Mendes, 117, Bairro Jardim Primavera, Casa, Casa do Sionel ao lado da Serralheria D'Stak</StackItem>
+                                    <StackItem fontSize='xs' textAlign='center'>37405-000, Monsenhor Paulo - MG, Avenida Adamo Caovila, 638, Bairro Centro, Casa, Rua do cemitério</StackItem>
                                 </VStack>
                             </Box>
                         )}

@@ -24,16 +24,16 @@ const GiftList = () => {
                 w='full'
                 minH='100vh'
             >
-                <HomeNavbar />
+                <HomeNavbar theme='light' />
 
                 <Box
-                    mb='12' bg='#b09c90'
+                    mb='12' bg='#e8d7cc'
                     pt='20'
                     pb='16'
                 >
                     <Text
                         textAlign='center'
-                        color='white'
+                        color='gray.900'
                         fontSize='4xl'
                         fontWeight='bold'
                         mb='6'
@@ -86,7 +86,6 @@ const GiftList = () => {
                                                 <Box key={x} mb='24'>
                                                     <Text
                                                         mb='4'
-                                                        color='white'
                                                         fontWeight='semibold'
                                                         textAlign='center'
                                                     >
@@ -284,11 +283,11 @@ const DrawerFilter = ({ categories, onChange, selected }: DrawerFilterProps) => 
             <IconButton
                 aria-label='Aplicar filtro'
                 size='lg'
-                color='white'
+                // color='white'
                 _hover={{
-                    bg: '#b09c90'
+                    bg: '#e8d7cc'
                 }}
-                bg='#b09c90'
+                bg='#e8d7cc'
                 icon={<Search2Icon />}
                 onClick={onOpen}
             />

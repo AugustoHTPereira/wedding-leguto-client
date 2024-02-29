@@ -81,7 +81,8 @@ const HomeWelcomeSection = () => {
                         >
                             <Image 
                                 src={Img}
-                                w='110'
+                                w='full'
+                                maxW='420'
                             />
                         </Box>
 
@@ -103,7 +104,7 @@ const HomeWelcomeSection = () => {
                                     fontSize='2xl'
                                     lineHeight='1.4'
                                 >
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean porttitor quam ligula, nec maximus nunc porta eu. Nam lobortis neque sapien, quis luctus nulla elementum ut. Pellentesque et sapien dictum, dictum nunc at, fermentum arcu. Suspendisse a dui dictum, rhoncus mi in, pharetra turpis. Phasellus et sapien.
+                                    [Nossa história]
                                 </Text>
                             </Box>
                         </Box>
@@ -139,7 +140,7 @@ const HomeWelcomeSection = () => {
                                 bg:'#9B7449'
                             }}
                         >
-                            ACESSE ALGO
+                            NOSSA HISTÓRIA
                         </Button>
                     </Flex>
                 </Box>
