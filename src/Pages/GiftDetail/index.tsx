@@ -251,7 +251,7 @@ const TakeModal = ({ gift, isSignedIn, isSigning, signin, beforeTake }: TakeModa
                                 </PinInput>
                             </HStack>
                         </FormControl>
-                        <Text color='gray.400' mt='2' fontSize='sm'>O código está disponível abaixo do QRCode no seu convite. Ex.: leguto.co/<b>{"<código>"}</b></Text>
+                        <Text color='gray.400' mt='2' fontSize='sm'>O código está disponível abaixo do QRCode no seu convite. Ex.: camilaguilherme.com.br/<b>{"<código>"}</b></Text>
                     </ModalBody>
 
                     <ModalFooter>

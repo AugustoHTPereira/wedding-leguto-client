@@ -2,7 +2,7 @@ import React from 'react'
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Text } from '@chakra-ui/react';
 import HomeNavbar from '../Home/components/HomeNavbar';
 
-const WHATSAPP_URL = 'https://wa.me/+55035997387844?text=Olá, eu não consigo encontrar o código de acesso do site do casamento #leguto. Pode me ajudar?';
+const WHATSAPP_URL = 'https://wa.me/+55035997387844?text=Olá, eu não consigo encontrar o código de acesso do site do casamento. Pode me ajudar?';
 
 const Help = () => {
     return (
@@ -54,7 +54,7 @@ const Help = () => {
                         <AccordionPanel pb={4}>
                             Não se preocupe, se você selecionou o presente anteriormente, pode ser que você esteja deslogado no site.
                             Para realizar login no site, basta escanear o QRCODE do seu convite apontando a câmera do seu celular, ou se preferir acesse {' '}
-                            <Text as='span' color='teal.400'>https://leguto.co/<Text as='span' color='red.400'>{'<'}seu_código{'>'}</Text></Text>, <b>lembre-se de alterar o conteúdo {'<'}seu_código{'>'} em vermelho pelo seu código contido no convite.</b>
+                            <Text as='span' color='teal.400'>https://camilaguilherme.com.br/<Text as='span' color='red.400'>{'<'}seu_código{'>'}</Text></Text>, <b>lembre-se de alterar o conteúdo {'<'}seu_código{'>'} em vermelho pelo seu código contido no convite.</b>
                         </AccordionPanel>
                     </AccordionItem>
 
