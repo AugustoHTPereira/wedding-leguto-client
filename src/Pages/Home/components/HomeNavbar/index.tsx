@@ -45,7 +45,10 @@ const HomeNavbar = ({ theme }: HomeNavbarProps) => {
                             fontSize="5xl"
                             textShadow='0 4px 4px rgba(0, 0, 0, 0.1)'
                         >
-                            <Image src={Brand} height={16} />
+                            {/* <Image src={Brand} height={16} /> */}
+                            <Text as='span'>C</Text>
+                            <Text as='span' fontSize="xl">&</Text>
+                            <Text as='span'>G</Text>
                         </Heading>
 
                         <HStack ml='auto' fontSize='xl' color={color} display={{ base: 'none', md: 'flex' }} spacing={6}>
