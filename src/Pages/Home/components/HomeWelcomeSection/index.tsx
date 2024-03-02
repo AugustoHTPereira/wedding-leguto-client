@@ -3,6 +3,7 @@ import { Box, Text, Image, Flex, Button, HStack, StackDivider, StackItem } from 
 import Img from '../../../../Assets/img/photo-1520854221256-17451cc331bf.avif'
 import useWeddingDate from '../../../../Hooks/useWeddingDate';
 import useIdentityContext from '../../../../Contexts/IdentityContext';
+import { Link } from 'react-router-dom';
 
 const HomeWelcomeSection = () => {
     const {date, diff: { d }} = useWeddingDate();
@@ -91,7 +92,7 @@ const HomeWelcomeSection = () => {
                                 <Text
                                     fontSize='44'
                                     >
-                                    Olá pessoal!
+                                    Olá a todos!
                                 </Text>
                             </Box>
 
@@ -99,12 +100,14 @@ const HomeWelcomeSection = () => {
                                 pl={{base: '6', md: '20'}}
                                 pr={{base: '6', md: '0'}}
                                 mt={{base: '4', md: '20'}}
+                                w='full'
+                                maxW='420'
                             >
                                 <Text
                                     fontSize='2xl'
                                     lineHeight='1.4'
                                 >
-                                    [Nossa história]
+                                    É um prazer recebê-los em nosso cantinho virtual, onde queremos compartilhar um pouco da jornada que nos trouxe até este momento tão especial - o nosso casamento!
                                 </Text>
                             </Box>
                         </Box>
@@ -130,17 +133,20 @@ const HomeWelcomeSection = () => {
 
                         <Button
                             rounded='0'
+                            as={Link}
+                            to='/history'
                             bg='#9B7449'
                             color='white'
                             size='lg'
-                            px='14'
+                            px='10'
+                            fontSize='xl'
                             py='7'
                             w={{base: 'full', md: 'unset'}}
                             _hover={{
                                 bg:'#9B7449'
                             }}
                         >
-                            NOSSA HISTÓRIA
+                           Conheça a nossa história
                         </Button>
                     </Flex>
                 </Box>

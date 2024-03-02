@@ -10,29 +10,31 @@ import useIdentityContext from '../../Contexts/IdentityContext';
 import HomeNavbar from '../Home/components/HomeNavbar';
 
 const GroomsmensManual: Record<string, string> = {
-    "roque e sirlene": Bol,
-    "marcelo e cintia": Bol,
-    "andré e monique": Bol,
-    "hiago e sabrina": Bol,
-    "rodrigo e vitória": Bol,
-    "milerson e nara": Bol,
-    "anderson e dariana": Bol,
-    "geisla": Wom,
-    "guilherme": Men,
-    "fernando": Men,
-    "gabrielly": Wom,
-    "evellyn": Wom,
-    "arisson": Men
+    'augusto e leilanne': Bol,
+    'lauanda e alvaro': Bol,
+    'isabela e lucas': Bol,
+    'íria e marcelo': Bol,
+    'adriano e francis': Bol,
+    'luciana e giovanni': Bol,
+    'ana luísa e chelverson': Bol,
+    'angélica e juliano': Bol,
+    'luis gustavo': Men,
+    'kelly': Wom,
+    'fernando': Men,
+    'douglas': Men,
+    'núbhia': Wom,
+    'luísa': Wom,
+    'paulo felipe': Men,
 }
 
 const GroomsmenManual = () => {
-    const {name} = useIdentityContext();
+    const { name } = useIdentityContext();
 
     return (
-        <Box bg='black' minH='100vh' w='full' px='6'>
-            <HomeNavbar />
+        <Box minH='100vh' w='full' px='6'>
+            <HomeNavbar theme='light' />
 
-            <Box w='full' maxW='sm' mx='auto' mt='6' borderRadius='xl' boxShadow='base' overflow='hidden'>
+            <Box w='full' maxW='sm' mx='auto' borderRadius='xl' boxShadow='base' overflow='hidden'>
                 <Image src={GroomsmensManual[name.toLowerCase()]} w='full' />
             </Box>
         </Box>

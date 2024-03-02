@@ -57,20 +57,20 @@ const HomeDrawer = ({ theme }: HomeDrawerProps) => {
                             <StackItem w='full'>
                                 <Text
                                     as={Link}
-                                    to='/history'
+                                    to='/gifts'
                                     fontSize='xl'
                                 >
-                                    Nossa história
+                                    Lista de presentes
                                 </Text>
                             </StackItem>
 
                             <StackItem w='full'>
                                 <Text
                                     as={Link}
-                                    to='/gifts'
+                                    to='/history'
                                     fontSize='xl'
                                 >
-                                    Lista de presentes
+                                    Nossa história
                                 </Text>
                             </StackItem>
 

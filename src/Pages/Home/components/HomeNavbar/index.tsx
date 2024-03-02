@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { Flex, HStack, StackItem, Box, Text, Image, Heading } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import HomeDrawer from "../HomeDrawer";
-import Brand from '../../../../Assets/img/brand-white.svg';
-import useIdentityContext from '../../../../Contexts/IdentityContext';
+import Dark from '../../../../Assets/img/flor-preto.png';
+import Light from '../../../../Assets/img/flor-branco.png';
 
 type HomeNavbarProps = {
     theme?: 'light' | 'dark'
 }
 
 const HomeNavbar = ({ theme }: HomeNavbarProps) => {
-    const { name } = useIdentityContext();
     const color = theme !== 'light' ? 'white' : 'gray.900';
+    const Brand = theme === 'light' ? Dark : Light;
 
     return (
         <>
@@ -45,10 +45,13 @@ const HomeNavbar = ({ theme }: HomeNavbarProps) => {
                             fontSize="5xl"
                             textShadow='0 4px 4px rgba(0, 0, 0, 0.1)'
                         >
-                            CeG
+                            <Image src={Brand} height={16} />
                         </Heading>
 
-                        <HStack ml='auto' fontSize='xl' color={color} display={{ base: 'none', md: 'flex' }}>
+                        <HStack ml='auto' fontSize='xl' color={color} display={{ base: 'none', md: 'flex' }} spacing={6}>
+                            <StackItem>
+                                <Link to='/history'>Nossa história</Link>
+                            </StackItem>
                             <StackItem>
                                 <Link to='/gifts'>Lista de presentes</Link>
                             </StackItem>

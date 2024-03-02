@@ -1,9 +1,6 @@
 import React from 'react';
 import { Box, Image, Text } from '@chakra-ui/react';
 import HomeNavbar from '../Home/components/HomeNavbar';
-import Image0001 from '../../Assets/img/0001.jpg'
-import Image0002 from '../../Assets/img/0002.jpg'
-import Image0003 from '../../Assets/img/0003.jpg'
 import useWeddingDate from '../../Hooks/useWeddingDate';
 
 const History = () => {
@@ -13,9 +10,8 @@ const History = () => {
         <Box
             w='full'
             minH='100vh'
-            bg='black'
         >
-            <HomeNavbar />
+            <HomeNavbar theme='light' />
 
             <Box px='6'>
                 <Box
@@ -30,7 +26,6 @@ const History = () => {
                     >
                         <Text
                             textAlign='center'
-                            color='white'
                             fontSize='4xl'
                             fontWeight='bold'
                             mb='6'
@@ -40,100 +35,38 @@ const History = () => {
 
                         <Text
                             textAlign='center'
-                            color='white'
                             maxW='md'
                             mx='auto'
-                            fontSize='lg'
+                            fontSize='xl'
                         >
                             Gostaríamos de compartilhar com você, nosso convidado, um pouco da nossa história.
                         </Text>
                     </Box>
 
-                    <Box color='gray.200'>
-                        <Text mb='6'>
-                            Podemos dizer que foi amor a primeira vista?
-                            <br />
-                            Talvez sim.
-                        </Text>
+                    <Box color='gray.800' fontSize='xl'>
+                        <Text mb='4' as='p'>Olá a todos,</Text>
 
-                        <Text mb='6'>
-                            Tudo começou no caixa do Supermercado Pereira. Onde uma linda menina dos olhos verdes (ou azuis) chamou a atenção de um repositor de gôndulas.
-                            <br />
-                            Alí mesmo, no mercado, trabalhava uma amiga dessa linda menina, e o menino esperto, porém vergonhoso, pediu o telefone da linda menina para sua amiga.
-                        </Text>
+                        <Text mb='4' as='p'>É um prazer recebê-los em nosso cantinho virtual, onde queremos compartilhar um pouco da jornada que nos trouxe até este momento tão especial - o nosso casamento!</Text>
 
-                        <Text mb='6'>
-                            Papo vai, papo vem, e no dia 9 de junho de 2017 foi o boom do nosso amor. Nosso primeiro beijo.
-                        </Text>
+                        <Text mb='4' as='p'>Tudo começou em 2016, quando conheci Camila. Ela era uma menina pura e sonhadora, e inicialmente éramos apenas amigos. Conversávamos diariamente, mas nunca imaginei que esse relacionamento evoluiria para algo tão significativo como é hoje.</Text>
 
-                        <Text mb='6'>
-                            Passado alguns dias, mais precisamente no dia 18 de junho de 2017, o atual noivo decide então conhecer a família da atual noiva. Aqui então, o nervosismo
-                            toma conta de todos. Afinal, o rapazinho do cabelo amarelo que trabalha no Pereira, filho do Sionel, iria pedir a mão da filha do Luiz Paulo em namoro.
-                        </Text>
+                        <Text mb='4' as='p'>Naquela época, eu estava no auge da adolescência, vivendo uma vida um tanto quanto desregrada. Festas, bebidas e uma crença distante em Deus dominavam meus dias. Por outro lado, Camila era alguém que buscava a pureza e a espiritualidade. Apesar de ser mais nova, ela tinha uma maturidade que eu admirava profundamente.</Text>
 
-                        <Image
-                            src={Image0001}
-                            maxHeight='64'
-                            mx='auto'
-                            mb='4'
-                            rounded='base'
-                        />
+                        <Text mb='4' as='p'>Foi nessa atmosfera de maturidade que, mesmo sendo apenas amigos, Camila começou a me dar conselhos, a me guiar e a me mostrar um caminho diferente. Sem perceber, fui me apaixonando por ela aos poucos. Com o tempo, nossas conversas se tornaram mais profundas e os laços que nos uniam se fortaleceram até que, em um momento especial durante a minha formatura, demos um passo além e ficamos juntos. A partir daí, foi como se uma explosão de sentimentos tomasse conta de nós.</Text>
 
-                        <Text textAlign='center' mb='6'>
-                            <b>Sim, graças a Deus, tudo ocorreu bem. Uffa!</b>
-                            <br />
-                            <Text as='span' color='gray.500'>Mas o nervosismo foi grande.</Text>
-                        </Text>
+                        <Text mb='4' as='p'>Desde então, nossos dias foram preenchidos com risadas, longas conversas e aventuras que nos levaram a descobrir o verdadeiro significado do amor e da parceria. Juntos, enfrentamos desafios que nos fizeram crescer individualmente e como casal, e aprendemos que, com amor e apoio mútuo, somos capazes de superar qualquer obstáculo que a vida nos apresente.</Text>
 
-                        <Text mb='6'>
-                            Toda menina, tem como sonho, receber as alianças de compromisso. Em 30 de setembro de 2017, foi então formalizado o nosso namoro com a entrega das alianças.
-                        </Text>
+                        <Text mb='4' as='p'>Essa frase já se tornou um lema em nosso relacionamento: "Costumo dizer que existe um Guilherme antes e um depois da Camila". E isso reflete a verdade sobre nossa jornada juntos. Camila não apenas trouxe amor à minha vida, mas também uma profunda transformação. Evoluímos juntos, não apenas como casal, mas também como indivíduos. Seja na vida pessoal, espiritual ou profissional, nossa parceria nos fortaleceu de maneiras inimagináveis. Encontramos não apenas amor um pelo outro, mas também conforto, confiança e carinho mútuo, tornando nossa jornada verdadeiramente especial e significativa.</Text>
 
-                        <Image
-                            src={Image0002}
-                            w='75%'
-                            maxHeight='64'
-                            objectFit='cover'
-                            mx='auto'
-                            mb='8'
-                            rounded='base'
-                        />
+                        <Text mb='4' as='p'>Então, depois de um namoro incrível, chegou a hora do pedido de casamento. Em um lugar romântico, cercado de pessoas que amamos, ele ajoelhou-se e, com o coração cheio de amor, fez a pergunta que mudaria nossas vidas para sempre. Foi um momento de pura felicidade e emoção, e mal podemos esperar para compartilhar essa alegria com todos vocês no dia do nosso casamento.</Text>
 
-                        <Text mb='6'>
-                            Passaram-se 5 anos de muita alegria, conquistas e aprendizado, decidimos dar um passo além. Decidimos que íamos noivar.
-                            <br />
-                            Em 18 de junho de 2022, com o apoio de nossas famílias e de Deus, iniciamos nossa nova etapa. <b>Ficamos noivos.</b>
-                        </Text>
+                        <Text mb='4' as='p'>À medida que nos preparamos para embarcar nesta nova fase de nossas vidas juntos, estamos cheios de esperança, sonhos e planos para o futuro. Mal podemos esperar para construir uma vida cheia de amor, aventuras e momentos inesquecíveis ao lado de cada um de vocês.</Text>
 
-                        <Image
-                            src={Image0003}
-                            w='45%'
-                            maxHeight='64'
-                            objectFit='cover'
-                            mx='auto'
-                            mb='8'
-                            rounded='base'
-                        />
+                        <Text mb='4' as='p'>Não podemos concluir sem expressar nossa profunda gratidão aos nossos pais. Seu amor incondicional, apoio e orientação ao longo dos anos foram fundamentais para moldar quem somos hoje e para nos preparar para este momento. Agradecemos por tudo que fizeram e por estarem ao nosso lado, não apenas como pais, mas como nossos maiores exemplos de amor e dedicação.</Text>
 
-                        <Text mb='16'>
-                            E para não perder costume nas nossas datas, em {days} dias, mais precisamente no dia 16 de junho de 2023 às 20 horas e 30 minutos, será realizado a
-                            nossa cerimônia matrimonial, em Campanha MG, onde esperamos você, nosso convidado, para celebrar conosco a nossa união.
-                        </Text>
+                        <Text mb='4' as='p'>A todos vocês que fazem parte desta jornada conosco, muito obrigado por compartilharem conosco este momento único e especial em nossas vidas.</Text>
 
-                        <Text fontSize='3xl' mb='4'>Dedicatória</Text>
-
-                        <Text mb='6'>
-                            Desde o início, nosso relacionamento foi regado de muito amor e apoio de nossa famílias.
-                            Acreditamos que vale deixar um espaço para os agradecimentos e dedicações aos nossos familiares.
-                            <br />
-                            <br />
-
-                            Aos nossos pais, somos imensamente gratos por todo o apoio e paciência que tiveram conosco. Os amamos muito.
-                        </Text>
-
-                        <Text mb='6' textAlign='center'>
-                            Obrigado à todos, em especial à você, que acompanhou pelo menos um pouquinho da nossa jornada até aqui.
-                        </Text>
+                        <Text mb='4' as='p'>Com amor, Camila e Guilherme.</Text>
                     </Box>
                 </Box>
             </Box>

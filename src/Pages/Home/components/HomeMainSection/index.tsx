@@ -1,8 +1,8 @@
 import React from 'react';
-import { useToken, HStack, StackDivider, StackItem, Box, Text, Heading, Flex } from "@chakra-ui/react";
+import { useToken, HStack, StackDivider, StackItem, Box, Text, Heading, Flex, Image } from "@chakra-ui/react";
 import useWeddingDate from "../../../../Hooks/useWeddingDate";
 import BackgroundPhoto from "../../../../Assets/img/wedding.avif"
-import BackgroundPhoto_SM from "../../../../Assets/img/IMG_7025.jpg"
+import Nome from "../../../../Assets/img/nome-branco.png";
 
 const HomeMainContent = () => {
     const fullHeight = useToken('sizes', '16')
@@ -47,7 +47,7 @@ const HomeMainContent = () => {
                     lineHeight='1'
                     textShadow='0 2px 4px rgba(0, 0, 0, 0.2)'
                 >
-                    Camila e Guilherme
+                    <Image src={Nome} h={300} />
                 </Heading>
 
                 <Text
@@ -55,6 +55,7 @@ const HomeMainContent = () => {
                     fontSize='2xl'
                     color='white'
                     mt='4'
+                    transform='translateY(-50px)'
                 >
                     {date.getDate()}-{date.getMonth().toString().padStart(2, '0')}-{date.getFullYear()}
                 </Text>

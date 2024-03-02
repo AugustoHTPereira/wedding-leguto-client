@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Heading, Image, StackItem, Text, VStack } from '@chakra-ui/react';
-import Brand from '../../Assets/img/brand.svg'
+import Brand from '../../Assets/img/flor-preto.png'
 
 const Privacy = () => {
     return (
@@ -31,16 +31,6 @@ const Privacy = () => {
 
                     <Text mb='10'>
                         Todos os arquivos enviados na plataforma terão o grau de privacidade público ou privado, onde arquivos públicos poderão ser disponibilizados em toda a aplicação, enquanto arquivos privados ficarão restritos aos noivos e ao seu proprietário podendo serem excluídos a qualquer momento sem aviso prévio.
-                    </Text>
-
-                    <Text mb='10'>
-                        A plataforma fará uso da Graph API desenvolvida pelo Instagram a fim de captar publicações que possuem a menção aos perfis <Text as='a' href='https://instagram.com/augustohtp' textDecor='underline'>@augustohtp</Text> e <Text as='a' href='https://instagram.com/leilannebz' textDecor='underline'>@leilannebz</Text> ou à hashtag <Text as='a' href='https://instagram.com/explore/tags/leguto' textDecor='underline'>#leguto</Text>.
-                    </Text>
-                </Box>
-
-                <Box mt='16'>
-                    <Text>
-                        Em caso de dúvidas e/ou problemas, entre em contato pelo e-mail: <Text textDecor='underline' href="mailto:augustohtp8@gmail.com" as='a' target='_blank'>augustohtp8@gmail.com</Text>
                     </Text>
                 </Box>
             </Box>
