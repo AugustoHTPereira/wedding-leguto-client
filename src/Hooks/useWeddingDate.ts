@@ -22,7 +22,7 @@ const MONTHS = [
     'Dezembro',
 ]
 
-const DATE = new Date(2024, 9, 27, 20);
+const DATE = new Date(2024, 9, 27, 20, 30);
 
 const useWeddingDate = (): WeddingDate => {
     const [diff, setDiff] = useState<Diff>({} as Diff)
