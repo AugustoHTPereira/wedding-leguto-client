@@ -51,7 +51,7 @@ const GiftList = () => {
 
                         {
                             !!isLoading && (
-                                <Box mx='auto' textAlign='center' color='white'>
+                                <Box mx='auto' textAlign='center'>
                                     <Spinner />
                                     <Text>Carregando presentes</Text>
                                 </Box>
