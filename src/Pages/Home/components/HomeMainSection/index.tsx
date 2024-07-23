@@ -1,12 +1,12 @@
 import React from 'react';
-import { useToken, HStack, StackDivider, StackItem, Box, Text, Heading, Flex, Image } from "@chakra-ui/react";
+import { useToken, Box, Text, Heading, Flex, Image } from "@chakra-ui/react";
 import useWeddingDate from "../../../../Hooks/useWeddingDate";
 import BackgroundPhoto from "../../../../Assets/img/wedding.avif"
 import Nome from "../../../../Assets/img/nome-branco.png";
 
 const HomeMainContent = () => {
     const fullHeight = useToken('sizes', '16')
-    const { date } = useWeddingDate();
+    const { dateStr } = useWeddingDate();
 
     return (
         <Box
@@ -57,7 +57,7 @@ const HomeMainContent = () => {
                     mt='4'
                     transform='translateY(-50px)'
                 >
-                    {date.getDate()}-{date.getMonth().toString().padStart(2, '0')}-{date.getFullYear()}
+                    {dateStr}
                 </Text>
             </Flex>
         </Box>

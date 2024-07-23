@@ -6,7 +6,7 @@ import useIdentityContext from '../../../../Contexts/IdentityContext';
 import { Link } from 'react-router-dom';
 
 const HomeWelcomeSection = () => {
-    const {date, diff: { d }} = useWeddingDate();
+    const {date, dateStr, diff: { d }} = useWeddingDate();
     const { name } = useIdentityContext();
 
     const getWelcomeMessage = () => {
@@ -47,7 +47,7 @@ const HomeWelcomeSection = () => {
                         justifyContent='center'
                     >
                         <StackItem w={{ base: 'full', md: 'unset' }}>
-                            <Text>{date.getDate()}-{date.getMonth().toString().padStart(2, '0')}-{date.getFullYear()}</Text>
+                            <Text>{dateStr}</Text>
                         </StackItem>
                         <StackItem w={{ base: 'full', md: 'unset' }}>
                             <Text>{date.getHours()}:{date.getMinutes().toString().padStart(2, '0')}h</Text>
