@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Text, Image, Flex, Button, HStack, StackDivider, StackItem } from '@chakra-ui/react';
-import Img from '../../../../Assets/img/photo-1520854221256-17451cc331bf.avif'
+import Img from '../../../../Assets/img/IMG_9116.jpg'
 import useWeddingDate from '../../../../Hooks/useWeddingDate';
 import useIdentityContext from '../../../../Contexts/IdentityContext';
 import { Link } from 'react-router-dom';
@@ -79,11 +79,15 @@ const HomeWelcomeSection = () => {
                     <Flex flexDir={{ base:'column', md: 'row' }}>
                         <Box
                             px={{base: '6', md: 'unset'}}
+                            w='full'
+                            maxW='420'
+                            h={{base: '380', md:'320'}}
                         >
                             <Image 
                                 src={Img}
                                 w='full'
-                                maxW='420'
+                                objectFit='cover'
+                                h='380'
                             />
                         </Box>
 
@@ -153,7 +157,7 @@ const HomeWelcomeSection = () => {
                             <Button
                                 rounded='0'
                                 as={Link}
-                                to='/history'
+                                to='/gifts'
                                 bg='#9B7449'
                                 color='white'
                                 size='lg'

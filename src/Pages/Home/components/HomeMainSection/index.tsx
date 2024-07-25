@@ -1,7 +1,7 @@
 import React from 'react';
 import { useToken, Box, Text, Heading, Flex, Image } from "@chakra-ui/react";
 import useWeddingDate from "../../../../Hooks/useWeddingDate";
-import BackgroundPhoto from "../../../../Assets/img/wedding.avif"
+import BackgroundPhoto from "../../../../Assets/img/IMG_9206.jpg"
 import Nome from "../../../../Assets/img/nome-branco.png";
 
 const HomeMainContent = () => {
@@ -15,6 +15,7 @@ const HomeMainContent = () => {
             bgImage={BackgroundPhoto}
             bgPosition='center'
             bgRepeat='no-repeat'
+            bgSize='cover'
             position='relative'
         >
             <Box 
@@ -26,7 +27,7 @@ const HomeMainContent = () => {
                 left='0'
                 w='full'
                 h='100vh'
-                backdropFilter='blur(4px) contrast(60%)'
+                backdropFilter='blur(3px)'
             />
 
             <Flex
