@@ -131,23 +131,43 @@ const HomeWelcomeSection = () => {
                             display={{base: 'none', md: 'block'}}
                         />
 
-                        <Button
-                            rounded='0'
-                            as={Link}
-                            to='/history'
-                            bg='#9B7449'
-                            color='white'
-                            size='lg'
-                            px='10'
-                            fontSize='xl'
-                            py='7'
-                            w={{base: 'full', md: 'unset'}}
-                            _hover={{
-                                bg:'#9B7449'
-                            }}
-                        >
-                           Conheça a nossa história
-                        </Button>
+                        <Flex flexDir="column" gap="2">
+                            <Button
+                                rounded='0'
+                                as={Link}
+                                to='/history'
+                                bg='#9B7449'
+                                color='white'
+                                size='lg'
+                                px='10'
+                                fontSize='xl'
+                                py='7'
+                                w={{base: 'full', md: 'unset'}}
+                                _hover={{
+                                    bg:'#9B7449'
+                                }}
+                            >
+                            Conheça a nossa história
+                            </Button>
+
+                            <Button
+                                rounded='0'
+                                as={Link}
+                                to='/history'
+                                bg='#9B7449'
+                                color='white'
+                                size='lg'
+                                px='10'
+                                fontSize='xl'
+                                py='7'
+                                w={{base: 'full', md: 'unset'}}
+                                _hover={{
+                                    bg:'#9B7449'
+                                }}
+                            >
+                                Lista de presentes
+                            </Button>
+                        </Flex>
                     </Flex>
                 </Box>
             </Box>
